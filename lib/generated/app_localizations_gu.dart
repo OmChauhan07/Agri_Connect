@@ -72,6 +72,12 @@ class AppLocalizationsGu extends AppLocalizations {
   String get authPassword => 'પાસવર્ડ';
 
   @override
+  String get authShowPassword => 'પાસવર્ડ બતાવો';
+
+  @override
+  String get authHidePassword => 'પાસવર્ડ છુપાવો';
+
+  @override
   String get authConfirmPassword => 'પાસવર્ડની પુષ્ટિ કરો';
 
   @override

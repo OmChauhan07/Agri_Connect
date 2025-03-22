@@ -23,6 +23,8 @@
   "authVerifyPhone": "फोन सत्यापित करें",
   "authEmail": "ईमेल",
   "authPassword": "पासवर्ड",
+  "authShowPassword": "पासवर्ड दिखाएं",
+  "authHidePassword": "पासवर्ड छिपाएं",
   "authConfirmPassword": "पासवर्ड की पुष्टि करें",
   "authName": "नाम",
   "authPhone": "फोन",

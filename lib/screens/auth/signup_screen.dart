@@ -5,6 +5,7 @@ import '../../models/user.dart';
 import '../../providers/auth_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
+import '../../utils/localization_helper.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -22,11 +23,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   UserRole _selectedRole = UserRole.consumer;
   bool _isLoading = false;
+  bool _obscurePassword = true;
   String? _errorMessage;
 
   Future<void> _signup() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -41,9 +43,9 @@ class _SignupScreenState extends State<SignupScreen> {
         _phoneController.text.trim(),
         _selectedRole,
       );
-      
+
       if (!mounted) return;
-      
+
       // Show success message and navigate to login
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -51,7 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
           backgroundColor: Colors.green,
         ),
       );
-      
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const LoginScreen()),
       );
@@ -77,6 +79,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = LocalizationHelper.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -181,13 +185,29 @@ class _SignupScreenState extends State<SignupScreen> {
                     // Password Field
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: _obscurePassword,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: loc.authPassword,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         prefixIcon: const Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                          tooltip: _obscurePassword
+                              ? loc.authShowPassword
+                              : loc.authHidePassword,
+                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -202,7 +222,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(height: 16),
                     // Role Selection
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
@@ -217,7 +238,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               value: UserRole.farmer,
                               child: Row(
                                 children: const [
-                                  Icon(Icons.agriculture, color: AppColors.primary),
+                                  Icon(Icons.agriculture,
+                                      color: AppColors.primary),
                                   SizedBox(width: 12),
                                   Text('Farmer'),
                                 ],
@@ -227,7 +249,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               value: UserRole.consumer,
                               child: Row(
                                 children: const [
-                                  Icon(Icons.shopping_cart, color: AppColors.primary),
+                                  Icon(Icons.shopping_cart,
+                                      color: AppColors.primary),
                                   SizedBox(width: 12),
                                   Text('Consumer'),
                                 ],

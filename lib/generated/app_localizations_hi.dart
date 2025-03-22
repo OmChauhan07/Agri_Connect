@@ -72,6 +72,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get authPassword => 'पासवर्ड';
 
   @override
+  String get authShowPassword => 'पासवर्ड दिखाएं';
+
+  @override
+  String get authHidePassword => 'पासवर्ड छिपाएं';
+
+  @override
   String get authConfirmPassword => 'पासवर्ड की पुष्टि करें';
 
   @override

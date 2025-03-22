@@ -23,6 +23,8 @@
   "authVerifyPhone": "Verify Phone",
   "authEmail": "Email",
   "authPassword": "Password",
+  "authShowPassword": "Show password",
+  "authHidePassword": "Hide password",
   "authConfirmPassword": "Confirm Password",
   "authName": "Name",
   "authPhone": "Phone",
