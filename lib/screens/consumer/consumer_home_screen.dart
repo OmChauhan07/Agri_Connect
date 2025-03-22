@@ -701,11 +701,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
-                                  foregroundColor: AppColors.primaryColor,
+                                  foregroundColor: AppColors.primary,
                                   padding: const EdgeInsets.symmetric(vertical: 12),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(color: AppColors.primaryColor),
+                                    side: const BorderSide(color: AppColors.primary),
                                   ),
                                 ),
                                 child: const Text('View All Products'),
@@ -748,7 +748,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           children: [
             Icon(
               icon,
-              color: AppColors.primaryColor,
+              color: AppColors.primary,
               size: 32,
             ),
             const SizedBox(height: 8),

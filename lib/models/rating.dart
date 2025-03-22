@@ -1,7 +1,4 @@
-enum RatingType {
-  product,
-  farmer
-}
+import '../utils/constants.dart';
 
 class Rating {
   final String id;

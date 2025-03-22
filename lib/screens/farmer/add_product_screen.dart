@@ -98,8 +98,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: AppColors.primaryColor,
-            colorScheme: const ColorScheme.light(primary: AppColors.primaryColor),
+            primaryColor: AppColors.primary,
+            colorScheme: const ColorScheme.light(primary: AppColors.primary),
             buttonTheme: const ButtonThemeData(
               textTheme: ButtonTextTheme.primary,
             ),

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../models/product.dart';
 import '../utils/theme.dart';
+import '../utils/constants.dart';
 import 'rating_bar.dart';
 
 class ProductCard extends StatelessWidget {
@@ -149,7 +150,7 @@ class ProductCard extends StatelessWidget {
                   Text(
                     '\$${product.price.toStringAsFixed(2)}',
                     style: const TextStyle(
-                      color: AppColors.primaryColor,
+                      color: AppColors.primary,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -193,7 +194,7 @@ class ProductCard extends StatelessWidget {
                           const Icon(
                             Icons.edit,
                             size: 14,
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                           ),
                         ],
                       ),
@@ -306,7 +307,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       '\$${product.price.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        color: AppColors.primaryColor,
+                        color: AppColors.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),

@@ -1,10 +1,4 @@
-enum OrderStatus {
-  pending,
-  processing,
-  shipped,
-  delivered,
-  cancelled
-}
+import '../utils/constants.dart';
 
 class OrderItem {
   final String productId;

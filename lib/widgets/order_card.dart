@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../models/order.dart';
 import '../utils/theme.dart';
+import '../utils/constants.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -141,7 +142,7 @@ class OrderCard extends StatelessWidget {
                               Text(
                                 '\$${(item.price * item.quantity).toStringAsFixed(2)}',
                                 style: const TextStyle(
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ],
@@ -182,7 +183,7 @@ class OrderCard extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        color: AppColors.primaryColor,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],
@@ -330,7 +331,7 @@ class OrderCard extends StatelessWidget {
           _buildActionButton(
             context, 
             'Rate Order', 
-            AppColors.primaryColor, 
+            AppColors.primary, 
             onRatePressed,
           ),
         ];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/theme.dart';
+import '../utils/constants.dart';
 
 class BadgeIcon extends StatelessWidget {
   final String badgeType;

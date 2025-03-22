@@ -82,9 +82,9 @@ class _FarmerOrdersScreenState extends State<FarmerOrdersScreen> with SingleTick
             child: TabBar(
               controller: _tabController,
               isScrollable: true,
-              labelColor: AppColors.primaryColor,
+              labelColor: AppColors.primary,
               unselectedLabelColor: Colors.grey,
-              indicatorColor: AppColors.primaryColor,
+              indicatorColor: AppColors.primary,
               tabs: [
                 _buildTab('Pending', _pendingOrders.length),
                 _buildTab('Processing', _processingOrders.length),
@@ -100,7 +100,7 @@ class _FarmerOrdersScreenState extends State<FarmerOrdersScreen> with SingleTick
             child: _isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
+                      color: AppColors.primary,
                     ),
                   )
                 : TabBarView(
@@ -128,14 +128,14 @@ class _FarmerOrdersScreenState extends State<FarmerOrdersScreen> with SingleTick
           Container(
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.1),
+              color: AppColors.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               count.toString(),
               style: const TextStyle(
                 fontSize: 12,
-                color: AppColors.primaryColor,
+                color: AppColors.primary,
               ),
             ),
           ),
@@ -170,7 +170,7 @@ class _FarmerOrdersScreenState extends State<FarmerOrdersScreen> with SingleTick
     
     return RefreshIndicator(
       onRefresh: _loadOrders,
-      color: AppColors.primaryColor,
+      color: AppColors.primary,
       child: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: orders.length,

@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import '../models/order.dart';
 import '../models/rating.dart';
 import '../services/database_service.dart';
+import '../utils/constants.dart';
 
 class OrderProvider with ChangeNotifier {
   final DatabaseService _databaseService = DatabaseService();
