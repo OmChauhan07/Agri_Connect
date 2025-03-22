@@ -38,41 +38,42 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
     });
 
     try {
-      final user = Provider.of<AuthProvider>(context, listen: false).currentUser;
+      final user =
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
       if (user == null) return;
 
-      final productProvider = Provider.of<ProductProvider>(context, listen: false);
+      final productProvider =
+          Provider.of<ProductProvider>(context, listen: false);
       final orderProvider = Provider.of<OrderProvider>(context, listen: false);
 
       // Fetch farmer's products
       await productProvider.fetchFarmerProducts(user.id);
-      
+
       // Fetch farmer's orders
-      await orderProvider.fetchFarmerOrders(user.id);
-      
+      await orderProvider.fetchFarmerOrders(farmerId: user.id);
+
       final orders = orderProvider.farmerOrders;
-      
+
       // Calculate dashboard statistics
       _totalOrders = orders.length;
-      _pendingOrders = orders.where((order) => 
-        order.status == OrderStatus.pending || 
-        order.status == OrderStatus.processing ||
-        order.status == OrderStatus.shipped
-      ).length;
-      _deliveredOrders = orders.where((order) => 
-        order.status == OrderStatus.delivered
-      ).length;
-      
+      _pendingOrders = orders
+          .where((order) =>
+              order.status == OrderStatus.pending ||
+              order.status == OrderStatus.processing ||
+              order.status == OrderStatus.shipped)
+          .length;
+      _deliveredOrders =
+          orders.where((order) => order.status == OrderStatus.delivered).length;
+
       // Calculate total revenue
       _totalRevenue = orders
           .where((order) => order.status == OrderStatus.delivered)
           .fold(0, (sum, order) => sum + order.totalAmount);
-      
+
       // Get top rated products
       final allProducts = productProvider.farmerProducts;
       allProducts.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
       _topProducts = allProducts.take(3).toList();
-      
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error loading dashboard: ${e.toString()}')),
@@ -88,7 +89,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).currentUser;
     final currencyFormat = NumberFormat.currency(locale: 'en_US', symbol: '\$');
-    
+
     return RefreshIndicator(
       onRefresh: _loadDashboardData,
       child: SingleChildScrollView(
@@ -182,7 +183,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Statistics
                   const Text(
                     'Your Statistics',
@@ -192,7 +193,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Stat Cards
                   GridView.count(
                     crossAxisCount: 2,
@@ -232,7 +233,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Top Products
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -259,7 +260,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Product List
                   _topProducts.isEmpty
                       ? Container(
@@ -288,11 +289,13 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                                 ElevatedButton(
                                   onPressed: () {
                                     // Navigate to add product screen
-                                    Navigator.pushNamed(context, '/add-product');
+                                    Navigator.pushNamed(
+                                        context, '/add-product');
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary,
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
                                   ),
                                   child: const Text('Add Product'),
                                 ),
@@ -304,7 +307,8 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: _topProducts.length,
-                          separatorBuilder: (context, index) => const SizedBox(height: 12),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final product = _topProducts[index];
                             return ProductCard(
