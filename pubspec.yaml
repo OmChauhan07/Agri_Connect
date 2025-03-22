@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  intl: ^0.19.0  # Ensure intl is at least this version
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -44,15 +45,15 @@ dependencies:
   supabase_flutter: ^2.1.0
   
   # UI Components & Widgets
-  intl: ^0.19.0
   image_picker: ^1.0.5
   flutter_svg: ^2.0.9
-  carousel_slider: ^4.2.1
+  # carousel_slider: 4.0.0  # Removed to avoid conflicts
   
   # Utils
   uuid: ^4.2.2
   dotenv: ^4.2.0
   flutter_dotenv: ^5.1.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -76,9 +77,13 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  # Generate localization files
+  generate: true
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
+    - assets/translations/
   #   - images/a_dot_burr.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

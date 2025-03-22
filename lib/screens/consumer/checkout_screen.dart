@@ -8,13 +8,14 @@ import '../../providers/auth_provider.dart';
 import '../../providers/order_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
+import '../../utils/routes.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final List<Product> products;
   final List<int> quantities;
   final double totalAmount;
   final String farmerId;
-  
+
   const CheckoutScreen({
     Key? key,
     required this.products,
@@ -32,16 +33,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
-  
+
   bool _isLoading = false;
   String _paymentMethod = 'Cash on Delivery';
-  
+
   @override
   void initState() {
     super.initState();
     _loadUserData();
   }
-  
+
   void _loadUserData() {
     final user = Provider.of<AuthProvider>(context, listen: false).currentUser;
     if (user != null) {
@@ -49,7 +50,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       _phoneController.text = user.phoneNumber ?? '';
     }
   }
-  
+
   @override
   void dispose() {
     _addressController.dispose();
@@ -57,26 +58,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _notesController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _placeOrder() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     setState(() {
       _isLoading = true;
     });
-    
+
     try {
-      final user = Provider.of<AuthProvider>(context, listen: false).currentUser;
+      final user =
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
       if (user == null) throw Exception('User not logged in');
-      
+
       final orderProvider = Provider.of<OrderProvider>(context, listen: false);
-      
+
       // Create order items
       List<OrderItem> items = [];
       for (int i = 0; i < widget.products.length; i++) {
         final product = widget.products[i];
         final quantity = widget.quantities[i];
-        
+
         items.add(OrderItem(
           productId: product.id,
           productName: product.name,
@@ -84,7 +86,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           price: product.price,
         ));
       }
-      
+
       // Create order
       final order = Order(
         id: const Uuid().v4(),
@@ -95,16 +97,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         orderDate: DateTime.now(),
         status: OrderStatus.pending,
         deliveryAddress: _addressController.text.trim(),
+        contactNumber: _phoneController.text.trim(),
       );
-      
+
       await orderProvider.createOrder(order);
-      
+
       if (!mounted) return;
-      
+
       // Navigate to order confirmation screen
       Navigator.pushReplacementNamed(
         context,
-        '/order-confirmation',
+        Routes.orderConfirmation,
         arguments: order.id,
       );
     } catch (e) {
@@ -117,7 +120,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,17 +171,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          
+
                           // Product List
                           ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: widget.products.length,
-                            separatorBuilder: (context, index) => const Divider(),
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
                             itemBuilder: (context, index) {
                               final product = widget.products[index];
                               final quantity = widget.quantities[index];
-                              
+
                               return Row(
                                 children: [
                                   // Product Image
@@ -202,11 +206,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           ),
                                   ),
                                   const SizedBox(width: 12),
-                                  
+
                                   // Product Details
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           product.name,
@@ -227,7 +232,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ],
                                     ),
                                   ),
-                                  
+
                                   // Subtotal
                                   Text(
                                     '\$${(product.price * quantity).toStringAsFixed(2)}',
@@ -239,9 +244,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               );
                             },
                           ),
-                          
+
                           const Divider(thickness: 1),
-                          
+
                           // Order Total
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -267,7 +272,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Delivery Information
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -293,7 +298,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          
+
                           // Delivery Address
                           TextFormField(
                             controller: _addressController,
@@ -313,13 +318,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             },
                           ),
                           const SizedBox(height: 16),
-                          
+
                           // Phone Number
                           TextFormField(
                             controller: _phoneController,
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
+                              hintText: 'Enter your phone number',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -329,11 +335,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your phone number';
                               }
+                              // Basic phone number validation
+                              if (value.trim().length < 10) {
+                                return 'Please enter a valid phone number';
+                              }
                               return null;
                             },
                           ),
                           const SizedBox(height: 16),
-                          
+
                           // Additional Notes
                           TextFormField(
                             controller: _notesController,
@@ -350,7 +360,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Payment Method
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -376,7 +386,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          
+
                           // Cash on Delivery Option
                           RadioListTile<String>(
                             title: const Row(
@@ -395,12 +405,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               });
                             },
                           ),
-                          
+
                           // Credit Card Option (Disabled for now)
                           RadioListTile<String>(
                             title: Row(
                               children: [
-                                const Icon(Icons.credit_card, color: Colors.blue),
+                                const Icon(Icons.credit_card,
+                                    color: Colors.blue),
                                 const SizedBox(width: 12),
                                 const Text('Credit/Debit Card'),
                                 const SizedBox(width: 8),
@@ -432,7 +443,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    
+
                     // Place Order Button
                     SizedBox(
                       width: double.infinity,
@@ -473,12 +484,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
 class OrderConfirmationScreen extends StatelessWidget {
   final String orderId;
-  
+
   const OrderConfirmationScreen({
     Key? key,
     required this.orderId,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

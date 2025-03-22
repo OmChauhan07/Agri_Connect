@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 import '../../models/product.dart';
 import '../../models/user.dart';
@@ -230,24 +229,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ? Stack(
                           children: [
                             // Image Carousel
-                            CarouselSlider(
-                              items: _product!.imageUrls.map((url) {
-                                return Image.network(
-                                  url,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                );
-                              }).toList(),
-                              options: CarouselOptions(
-                                height: 300,
-                                viewportFraction: 1.0,
-                                enlargeCenterPage: false,
-                                onPageChanged: (index, reason) {
+                            SizedBox(
+                              height: 300,
+                              child: PageView.builder(
+                                controller: PageController(
+                                  initialPage: _currentImageIndex,
+                                ),
+                                onPageChanged: (index) {
                                   setState(() {
                                     _currentImageIndex = index;
                                   });
                                 },
-                                autoPlay: _product!.imageUrls.length > 1,
+                                itemCount: _product!.imageUrls.length,
+                                itemBuilder: (context, index) {
+                                  return Image.network(
+                                    _product!.imageUrls[index],
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  );
+                                },
                               ),
                             ),
 

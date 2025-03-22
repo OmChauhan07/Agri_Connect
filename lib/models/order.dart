@@ -5,14 +5,14 @@ class OrderItem {
   final String productName;
   final int quantity;
   final double price;
-  
+
   OrderItem({
     required this.productId,
     required this.productName,
     required this.quantity,
     required this.price,
   });
-  
+
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
       productId: json['product_id'],
@@ -21,7 +21,7 @@ class OrderItem {
       price: json['price'].toDouble(),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'product_id': productId,
@@ -41,6 +41,7 @@ class Order {
   final DateTime orderDate;
   final OrderStatus status;
   final String? deliveryAddress;
+  final String? contactNumber;
   final String? cancelReason;
   final bool isRated;
 
@@ -53,6 +54,7 @@ class Order {
     required this.orderDate,
     required this.status,
     this.deliveryAddress,
+    this.contactNumber,
     this.cancelReason,
     this.isRated = false,
   });
@@ -62,11 +64,14 @@ class Order {
       id: json['id'],
       consumerId: json['consumer_id'],
       farmerId: json['farmer_id'],
-      items: (json['items'] as List).map((item) => OrderItem.fromJson(item)).toList(),
+      items: (json['items'] as List)
+          .map((item) => OrderItem.fromJson(item))
+          .toList(),
       totalAmount: json['total_amount'].toDouble(),
       orderDate: DateTime.parse(json['order_date']),
       status: OrderStatus.values.byName(json['status']),
       deliveryAddress: json['delivery_address'],
+      contactNumber: json['contact_number'],
       cancelReason: json['cancel_reason'],
       isRated: json['is_rated'] ?? false,
     );
@@ -82,6 +87,7 @@ class Order {
       'order_date': orderDate.toIso8601String(),
       'status': status.name,
       'delivery_address': deliveryAddress,
+      'contact_number': contactNumber,
       'cancel_reason': cancelReason,
       'is_rated': isRated,
     };
@@ -96,6 +102,7 @@ class Order {
     DateTime? orderDate,
     OrderStatus? status,
     String? deliveryAddress,
+    String? contactNumber,
     String? cancelReason,
     bool? isRated,
   }) {
@@ -108,6 +115,7 @@ class Order {
       orderDate: orderDate ?? this.orderDate,
       status: status ?? this.status,
       deliveryAddress: deliveryAddress ?? this.deliveryAddress,
+      contactNumber: contactNumber ?? this.contactNumber,
       cancelReason: cancelReason ?? this.cancelReason,
       isRated: isRated ?? this.isRated,
     );

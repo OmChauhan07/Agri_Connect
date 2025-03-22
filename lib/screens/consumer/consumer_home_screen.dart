@@ -5,6 +5,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
+import '../../utils/localization_helper.dart';
 import 'donation_screen.dart';
 import 'consumer_orders_screen.dart';
 import 'consumer_profile_screen.dart';
@@ -44,36 +45,25 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).currentUser;
-    
+    final loc = LocalizationHelper.of(context);
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,
-        title: const Text(
-          'AgriConnect',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text(loc.navigationHome),
         actions: [
-          // Cart Icon
           IconButton(
-            icon: const Icon(Icons.shopping_cart, color: Colors.white),
+            icon: const Icon(Icons.search),
             onPressed: () {
-              // Navigate to cart screen
-              Navigator.pushNamed(context, '/cart');
+              // Show search dialog or navigate to search screen
             },
           ),
-          // Notification Icon
           IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.white),
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              // TODO: Implement notifications screen
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Notifications feature coming soon')),
-              );
+              // Navigate to cart screen
             },
           ),
         ],
@@ -104,22 +94,22 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
           backgroundColor: Colors.white,
           selectedItemColor: AppColors.primary,
           unselectedItemColor: Colors.grey,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.store),
-              label: 'Market',
+              icon: const Icon(Icons.home),
+              label: loc.navigationHome,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.volunteer_activism),
-              label: 'Donate',
+              icon: const Icon(Icons.volunteer_activism),
+              label: loc.navigationDonate,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag),
-              label: 'Orders',
+              icon: const Icon(Icons.shopping_bag),
+              label: loc.navigationOrders,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
+              icon: const Icon(Icons.person),
+              label: loc.navigationProfile,
             ),
           ],
         ),
@@ -138,26 +128,26 @@ class MarketplaceScreen extends StatefulWidget {
 class _MarketplaceScreenState extends State<MarketplaceScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool _isLoading = true;
-  
+
   @override
   void initState() {
     super.initState();
     _loadProducts();
   }
-  
+
   Future<void> _loadProducts() async {
     setState(() {
       _isLoading = true;
     });
 
     try {
-      final productProvider = Provider.of<ProductProvider>(context, listen: false);
-      
+      final productProvider =
+          Provider.of<ProductProvider>(context, listen: false);
+
       // Load featured farmers and products
       await productProvider.fetchFeaturedFarmers();
       await productProvider.fetchFeaturedProducts();
       await productProvider.fetchAllProducts();
-      
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error loading marketplace: ${e.toString()}')),
@@ -168,7 +158,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       });
     }
   }
-  
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -178,7 +168,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    
+    final loc = LocalizationHelper.of(context);
+
     return RefreshIndicator(
       onRefresh: _loadProducts,
       color: AppColors.primary,
@@ -202,7 +193,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       decoration: InputDecoration(
                         hintText: 'Search for products or farmers...',
                         hintStyle: TextStyle(color: Colors.grey[400]),
-                        prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                        prefixIcon:
+                            const Icon(Icons.search, color: Colors.grey),
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -214,14 +206,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       onSubmitted: (value) {
                         // Navigate to search results
                         Navigator.pushNamed(
-                          context, 
+                          context,
                           '/search-results',
                           arguments: value,
                         );
                       },
                     ),
                   ),
-                  
+
                   // Featured Farmers
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -231,9 +223,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'Featured Farmers',
-                              style: TextStyle(
+                            Text(
+                              loc.farmerProducts,
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -243,9 +235,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 // Navigate to all farmers
                                 Navigator.pushNamed(context, '/farmers');
                               },
-                              child: const Text(
-                                'See All',
-                                style: TextStyle(
+                              child: Text(
+                                loc.productsAll,
+                                style: const TextStyle(
                                   color: AppColors.primary,
                                 ),
                               ),
@@ -253,7 +245,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Horizontal Farmer List
                         SizedBox(
                           height: 150,
@@ -266,9 +258,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 )
                               : ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: productProvider.featuredFarmers.length,
+                                  itemCount:
+                                      productProvider.featuredFarmers.length,
                                   itemBuilder: (context, index) {
-                                    final farmer = productProvider.featuredFarmers[index];
+                                    final farmer =
+                                        productProvider.featuredFarmers[index];
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 16),
                                       child: GestureDetector(
@@ -287,11 +281,16 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                               children: [
                                                 CircleAvatar(
                                                   radius: 50,
-                                                  backgroundColor: Colors.grey[200],
-                                                  backgroundImage: farmer.profileImage != null
-                                                      ? NetworkImage(farmer.profileImage!)
+                                                  backgroundColor:
+                                                      Colors.grey[200],
+                                                  backgroundImage: farmer
+                                                              .profileImage !=
+                                                          null
+                                                      ? NetworkImage(
+                                                          farmer.profileImage!)
                                                       : null,
-                                                  child: farmer.profileImage == null
+                                                  child: farmer.profileImage ==
+                                                          null
                                                       ? const Icon(
                                                           Icons.person,
                                                           size: 50,
@@ -304,13 +303,17 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                     bottom: 0,
                                                     right: 0,
                                                     child: Container(
-                                                      padding: const EdgeInsets.all(4),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4),
                                                       decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         shape: BoxShape.circle,
                                                         boxShadow: [
                                                           BoxShadow(
-                                                            color: Colors.black.withOpacity(0.1),
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.1),
                                                             spreadRadius: 1,
                                                             blurRadius: 2,
                                                           ),
@@ -318,9 +321,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                       ),
                                                       child: Icon(
                                                         Icons.eco,
-                                                        color: farmer.badgeType == 'green'
-                                                            ? Colors.green
-                                                            : Colors.orange,
+                                                        color:
+                                                            farmer.badgeType ==
+                                                                    'green'
+                                                                ? Colors.green
+                                                                : Colors.orange,
                                                         size: 18,
                                                       ),
                                                     ),
@@ -364,7 +369,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       ],
                     ),
                   ),
-                  
+
                   // Top Rated Products
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -374,9 +379,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'Top Rated Products',
-                              style: TextStyle(
+                            Text(
+                              loc.productsFeatured,
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -386,9 +391,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 // Navigate to all products
                                 Navigator.pushNamed(context, '/products');
                               },
-                              child: const Text(
-                                'See All',
-                                style: TextStyle(
+                              child: Text(
+                                loc.productsAll,
+                                style: const TextStyle(
                                   color: AppColors.primary,
                                 ),
                               ),
@@ -396,7 +401,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Horizontal Products List
                         SizedBox(
                           height: 220,
@@ -409,9 +414,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 )
                               : ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: productProvider.featuredProducts.length,
+                                  itemCount:
+                                      productProvider.featuredProducts.length,
                                   itemBuilder: (context, index) {
-                                    final product = productProvider.featuredProducts[index];
+                                    final product =
+                                        productProvider.featuredProducts[index];
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 16),
                                       child: GestureDetector(
@@ -427,24 +434,29 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                           width: 160,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.grey.withOpacity(0.1),
+                                                color: Colors.grey
+                                                    .withOpacity(0.1),
                                                 spreadRadius: 1,
                                                 blurRadius: 5,
                                               ),
                                             ],
                                           ),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               // Product Image
                                               ClipRRect(
-                                                borderRadius: const BorderRadius.vertical(
+                                                borderRadius:
+                                                    const BorderRadius.vertical(
                                                   top: Radius.circular(10),
                                                 ),
-                                                child: product.imageUrls.isNotEmpty
+                                                child: product
+                                                        .imageUrls.isNotEmpty
                                                     ? Image.network(
                                                         product.imageUrls.first,
                                                         height: 120,
@@ -462,26 +474,32 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                       ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.all(8.0),
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     // Product Name
                                                     Text(
                                                       product.name,
                                                       style: const TextStyle(
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                       maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
                                                     const SizedBox(height: 4),
                                                     // Product Price
                                                     Text(
                                                       '\$${product.price.toStringAsFixed(2)}',
                                                       style: const TextStyle(
-                                                        color: AppColors.primary,
-                                                        fontWeight: FontWeight.bold,
+                                                        color:
+                                                            AppColors.primary,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                     const SizedBox(height: 4),
@@ -493,12 +511,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                           color: Colors.amber,
                                                           size: 14,
                                                         ),
-                                                        const SizedBox(width: 4),
+                                                        const SizedBox(
+                                                            width: 4),
                                                         Text(
                                                           '${product.rating?.toStringAsFixed(1) ?? '0.0'} (${product.totalRatings ?? 0})',
                                                           style: TextStyle(
                                                             fontSize: 12,
-                                                            color: Colors.grey[600],
+                                                            color: Colors
+                                                                .grey[600],
                                                           ),
                                                         ),
                                                       ],
@@ -517,7 +537,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       ],
                     ),
                   ),
-                  
+
                   // All Categories
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -532,7 +552,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Category Grid
                         GridView.count(
                           crossAxisCount: 3,
@@ -549,7 +569,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                       ],
                     ),
                   ),
-                  
+
                   // All Products
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -564,7 +584,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        
+
                         // Products Grid
                         productProvider.allProducts.isEmpty
                             ? Center(
@@ -574,7 +594,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 ),
                               )
                             : GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   childAspectRatio: 0.75,
                                   crossAxisSpacing: 16,
@@ -582,11 +603,13 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 ),
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: productProvider.allProducts.length > 4
+                                itemCount: productProvider.allProducts.length >
+                                        4
                                     ? 4 // Just show 4 products in the home screen
                                     : productProvider.allProducts.length,
                                 itemBuilder: (context, index) {
-                                  final product = productProvider.allProducts[index];
+                                  final product =
+                                      productProvider.allProducts[index];
                                   return GestureDetector(
                                     onTap: () {
                                       // Navigate to product details
@@ -609,11 +632,13 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                         ],
                                       ),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           // Product Image
                                           ClipRRect(
-                                            borderRadius: const BorderRadius.vertical(
+                                            borderRadius:
+                                                const BorderRadius.vertical(
                                               top: Radius.circular(10),
                                             ),
                                             child: product.imageUrls.isNotEmpty
@@ -636,7 +661,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 // Product Name
                                                 Text(
@@ -645,7 +671,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                   maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                                 const SizedBox(height: 4),
                                                 // Product Price
@@ -684,7 +711,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                   );
                                 },
                               ),
-                        
+
                         // See All Button
                         if (productProvider.allProducts.length > 4)
                           Padding(
@@ -699,10 +726,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
                                   foregroundColor: AppColors.primary,
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(color: AppColors.primary),
+                                    side: const BorderSide(
+                                        color: AppColors.primary),
                                   ),
                                 ),
                                 child: const Text('View All Products'),

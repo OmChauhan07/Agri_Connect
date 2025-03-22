@@ -13,7 +13,7 @@ import '../../utils/theme.dart';
 
 class AddProductScreen extends StatefulWidget {
   final Product? product; // If provided, we're editing a product
-  
+
   const AddProductScreen({Key? key, this.product}) : super(key: key);
 
   @override
@@ -25,22 +25,35 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _stockQuantityController = TextEditingController();
-  
+  final TextEditingController _stockQuantityController =
+      TextEditingController();
+
   DateTime _harvestDate = DateTime.now();
   DateTime _bestBeforeDate = DateTime.now().add(const Duration(days: 30));
-  
+
   List<XFile> _selectedImages = [];
   List<String> _existingImageUrls = [];
-  
+
   bool _isOrganic = true;
   bool _isAvailable = true;
   bool _isLoading = false;
-  
+  String _selectedCategory = 'Vegetables'; // Default category
+
+  // List of available categories
+  final List<String> _categories = [
+    'Vegetables',
+    'Fruits',
+    'Grains',
+    'Dairy',
+    'Meat',
+    'Herbs',
+    'Others'
+  ];
+
   @override
   void initState() {
     super.initState();
-    
+
     // If we're editing a product, populate the fields
     if (widget.product != null) {
       _nameController.text = widget.product!.name;
@@ -52,9 +65,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
       _existingImageUrls = widget.product!.imageUrls;
       _isOrganic = widget.product!.isOrganic;
       _isAvailable = widget.product!.isAvailable;
+      _selectedCategory = widget.product!.category;
     }
   }
-  
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -63,10 +77,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _stockQuantityController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _pickImages() async {
     final ImagePicker picker = ImagePicker();
-    
+
     try {
       final List<XFile> images = await picker.pickMultiImage();
       if (images.isNotEmpty) {
@@ -80,16 +94,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
       );
     }
   }
-  
+
   Future<void> _selectDate(BuildContext context, bool isHarvestDate) async {
     final DateTime initialDate = isHarvestDate ? _harvestDate : _bestBeforeDate;
-    final DateTime firstDate = isHarvestDate 
+    final DateTime firstDate = isHarvestDate
         ? DateTime.now().subtract(const Duration(days: 365))
         : _harvestDate;
     final DateTime lastDate = isHarvestDate
         ? DateTime.now()
         : DateTime.now().add(const Duration(days: 365));
-    
+
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: initialDate,
@@ -108,7 +122,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         );
       },
     );
-    
+
     if (picked != null) {
       setState(() {
         if (isHarvestDate) {
@@ -123,28 +137,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
       });
     }
   }
-  
+
   Future<void> _saveProduct() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     setState(() {
       _isLoading = true;
     });
-    
+
     try {
-      final user = Provider.of<AuthProvider>(context, listen: false).currentUser;
+      final user =
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
       if (user == null) throw Exception('User not logged in');
-      
-      final productProvider = Provider.of<ProductProvider>(context, listen: false);
-      
+
+      final productProvider =
+          Provider.of<ProductProvider>(context, listen: false);
+
       // Upload images first if any new images were selected
       List<String> imageUrls = [..._existingImageUrls];
-      
+
       if (_selectedImages.isNotEmpty) {
-        final uploadedUrls = await productProvider.uploadProductImages(_selectedImages);
+        final uploadedUrls =
+            await productProvider.uploadProductImages(_selectedImages);
         imageUrls.addAll(uploadedUrls);
       }
-      
+
       // Create or update product
       final product = Product(
         id: widget.product?.id ?? const Uuid().v4(),
@@ -159,9 +176,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
         rating: widget.product?.rating,
         totalRatings: widget.product?.totalRatings,
         isOrganic: _isOrganic,
-        isAvailable: _isAvailable && int.parse(_stockQuantityController.text) > 0,
+        isAvailable:
+            _isAvailable && int.parse(_stockQuantityController.text) > 0,
+        category: _selectedCategory,
       );
-      
+
       if (widget.product == null) {
         // Creating new product
         await productProvider.addProduct(product);
@@ -169,16 +188,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
         // Updating existing product
         await productProvider.updateProduct(product);
       }
-      
+
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Product saved successfully'),
           backgroundColor: Colors.green,
         ),
       );
-      
+
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -190,11 +209,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('MMM dd, yyyy');
-    
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -251,7 +270,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.grey[300]!),
                         ),
-                        child: _existingImageUrls.isEmpty && _selectedImages.isEmpty
+                        child: _existingImageUrls.isEmpty &&
+                                _selectedImages.isEmpty
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -275,86 +295,98 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 children: [
                                   // Existing Images
                                   ..._existingImageUrls.map((url) => Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: Image.network(
-                                            url,
-                                            width: 120,
-                                            height: 130,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          top: 5,
-                                          right: 5,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _existingImageUrls.remove(url);
-                                              });
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                                borderRadius: BorderRadius.circular(20),
-                                              ),
-                                              child: const Icon(
-                                                Icons.close,
-                                                size: 16,
-                                                color: Colors.white,
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
+                                        child: Stack(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.network(
+                                                url,
+                                                width: 120,
+                                                height: 130,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              top: 5,
+                                              right: 5,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _existingImageUrls
+                                                        .remove(url);
+                                                  });
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(4),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.close,
+                                                    size: 16,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  )),
-                                  
+                                      )),
+
                                   // Selected Images
                                   ..._selectedImages.map((file) => Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: Image.file(
-                                            File(file.path),
-                                            width: 120,
-                                            height: 130,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          top: 5,
-                                          right: 5,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _selectedImages.remove(file);
-                                              });
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                                borderRadius: BorderRadius.circular(20),
-                                              ),
-                                              child: const Icon(
-                                                Icons.close,
-                                                size: 16,
-                                                color: Colors.white,
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
+                                        child: Stack(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.file(
+                                                File(file.path),
+                                                width: 120,
+                                                height: 130,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              top: 5,
+                                              right: 5,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _selectedImages
+                                                        .remove(file);
+                                                  });
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(4),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black54,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.close,
+                                                    size: 16,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  )),
-                                  
+                                      )),
+
                                   // Add more images button
                                   GestureDetector(
                                     onTap: _pickImages,
@@ -364,10 +396,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       decoration: BoxDecoration(
                                         color: Colors.grey[200],
                                         borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(color: Colors.grey[300]!),
+                                        border: Border.all(
+                                            color: Colors.grey[300]!),
                                       ),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.add_circle_outline,
@@ -390,7 +424,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Basic Info
                     const Text(
                       'Basic Information',
@@ -400,7 +434,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Product Name
                     TextFormField(
                       controller: _nameController,
@@ -420,7 +454,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Product Description
                     TextFormField(
                       controller: _descriptionController,
@@ -442,7 +476,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Pricing & Inventory
                     const Text(
                       'Pricing & Inventory',
@@ -452,11 +486,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Price
                     TextFormField(
                       controller: _priceController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
                         labelText: 'Price (\$)',
                         border: OutlineInputBorder(
@@ -482,7 +517,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Stock Quantity
                     TextFormField(
                       controller: _stockQuantityController,
@@ -512,12 +547,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Availability Toggle
                     SwitchListTile(
                       title: const Text('Available for Sale'),
                       subtitle: Text(
-                        _isAvailable ? 'Product is visible to customers' : 'Product is hidden from customers',
+                        _isAvailable
+                            ? 'Product is visible to customers'
+                            : 'Product is hidden from customers',
                         style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),
                       value: _isAvailable,
@@ -530,7 +567,61 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
                     const SizedBox(height: 24),
-                    
+
+                    // Category Dropdown
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey[300]!),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Category',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          DropdownButtonFormField<String>(
+                            value: _selectedCategory,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide:
+                                    BorderSide(color: Colors.grey[300]!),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16),
+                            ),
+                            items: _categories.map((category) {
+                              return DropdownMenuItem<String>(
+                                value: category,
+                                child: Text(category),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedCategory = value!;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select a category';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
                     // Product Details
                     const Text(
                       'Product Details',
@@ -540,7 +631,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Dates
                     Row(
                       children: [
@@ -636,13 +727,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Organic Toggle
                     SwitchListTile(
                       title: const Text('Organic Product'),
                       subtitle: Text(
-                        _isOrganic 
-                            ? 'This product is organically grown without chemicals' 
+                        _isOrganic
+                            ? 'This product is organically grown without chemicals'
                             : 'This product is conventionally grown',
                         style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),
@@ -656,7 +747,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
                     const SizedBox(height: 32),
-                    
+
                     // Save Button
                     SizedBox(
                       width: double.infinity,
@@ -679,7 +770,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 ),
                               )
                             : Text(
-                                widget.product == null ? 'Add Product' : 'Update Product',
+                                widget.product == null
+                                    ? 'Add Product'
+                                    : 'Update Product',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

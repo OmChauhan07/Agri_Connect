@@ -9,6 +9,9 @@ import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 import '../../widgets/badge_icon.dart';
 import '../auth/login_screen.dart';
+import '../../providers/locale_provider.dart';
+import '../../utils/routes.dart';
+import '../../utils/localization_helper.dart';
 
 class FarmerProfileScreen extends StatefulWidget {
   const FarmerProfileScreen({Key? key}) : super(key: key);
@@ -466,23 +469,23 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                         ListTile(
                           leading: const Icon(Icons.language,
                               color: AppColors.primary),
-                          title: const Text('Language'),
+                          title: Text(
+                              LocalizationHelper.of(context).settingsLanguage),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text('English'),
+                              Consumer<LocaleProvider>(
+                                builder: (context, provider, _) =>
+                                    Text(provider.currentLanguageName),
+                              ),
                               const SizedBox(width: 8),
                               const Icon(Icons.arrow_forward_ios, size: 16),
                             ],
                           ),
                           contentPadding: EdgeInsets.zero,
                           onTap: () {
-                            // TODO: Implement language selection
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text('Language selection coming soon')),
-                            );
+                            Navigator.pushNamed(
+                                context, Routes.languageSettings);
                           },
                         ),
                         const Divider(),

@@ -35,12 +35,14 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     });
 
     try {
-      final user = Provider.of<AuthProvider>(context, listen: false).currentUser;
+      final user =
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
       if (user == null) return;
 
-      final productProvider = Provider.of<ProductProvider>(context, listen: false);
+      final productProvider =
+          Provider.of<ProductProvider>(context, listen: false);
       await productProvider.fetchFarmerProducts(user.id);
-      
+
       // Apply initial filtering
       _applyFilters();
     } catch (e) {
@@ -55,17 +57,18 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   }
 
   void _applyFilters() {
-    final productProvider = Provider.of<ProductProvider>(context, listen: false);
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     final allProducts = productProvider.farmerProducts;
     final searchQuery = _searchController.text.toLowerCase();
-    
+
     setState(() {
       _filteredProducts = allProducts.where((product) {
         // Apply search filter
         final matchesSearch = searchQuery.isEmpty ||
             product.name.toLowerCase().contains(searchQuery) ||
             product.description.toLowerCase().contains(searchQuery);
-            
+
         // Apply category filter
         bool matchesFilter = true;
         if (_filterOption == 'Available') {
@@ -73,7 +76,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
         } else if (_filterOption == 'Out of Stock') {
           matchesFilter = !product.isAvailable || product.stockQuantity <= 0;
         }
-        
+
         return matchesSearch && matchesFilter;
       }).toList();
     });
@@ -114,7 +117,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                   onChanged: (_) => _applyFilters(),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Filter and View Toggle Row
                 Row(
                   children: [
@@ -158,7 +161,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    
+
                     // View Toggle
                     Container(
                       decoration: BoxDecoration(
@@ -209,7 +212,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                               ),
                               child: Icon(
                                 Icons.view_list,
-                                color: !_isGridView ? Colors.white : Colors.grey,
+                                color:
+                                    !_isGridView ? Colors.white : Colors.grey,
                               ),
                             ),
                           ),
@@ -221,7 +225,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
               ],
             ),
           ),
-          
+
           // Products List
           Expanded(
             child: _isLoading
@@ -277,7 +281,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                         child: _isGridView
                             ? GridView.builder(
                                 padding: const EdgeInsets.all(16),
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   childAspectRatio: 0.75,
                                   crossAxisSpacing: 16,
@@ -292,7 +297,13 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                     isGridView: true,
                                     onTap: () {
                                       // Navigate to edit product
-                                      // TODO: Implement edit product screen
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => AddProductScreen(
+                                              product: product),
+                                        ),
+                                      ).then((_) => _loadProducts());
                                     },
                                   );
                                 },
@@ -300,7 +311,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                             : ListView.separated(
                                 padding: const EdgeInsets.all(16),
                                 itemCount: _filteredProducts.length,
-                                separatorBuilder: (context, index) => const SizedBox(height: 16),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 16),
                                 itemBuilder: (context, index) {
                                   final product = _filteredProducts[index];
                                   return ProductCard(
@@ -309,7 +321,13 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                                     isGridView: false,
                                     onTap: () {
                                       // Navigate to edit product
-                                      // TODO: Implement edit product screen
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => AddProductScreen(
+                                              product: product),
+                                        ),
+                                      ).then((_) => _loadProducts());
                                     },
                                   );
                                 },

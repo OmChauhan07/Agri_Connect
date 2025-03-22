@@ -12,6 +12,7 @@ class Product {
   final int? totalRatings;
   final bool isOrganic;
   final bool isAvailable;
+  final String category;
 
   Product({
     required this.id,
@@ -27,6 +28,7 @@ class Product {
     this.totalRatings,
     required this.isOrganic,
     required this.isAvailable,
+    required this.category,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,7 @@ class Product {
       totalRatings: json['total_ratings'],
       isOrganic: json['is_organic'] ?? true,
       isAvailable: json['is_available'] ?? true,
+      category: json['category'] ?? 'Vegetables',
     );
   }
 
@@ -62,6 +65,7 @@ class Product {
       'total_ratings': totalRatings,
       'is_organic': isOrganic,
       'is_available': isAvailable,
+      'category': category,
     };
   }
 
@@ -79,6 +83,7 @@ class Product {
     int? totalRatings,
     bool? isOrganic,
     bool? isAvailable,
+    String? category,
   }) {
     return Product(
       id: id ?? this.id,
@@ -94,6 +99,7 @@ class Product {
       totalRatings: totalRatings ?? this.totalRatings,
       isOrganic: isOrganic ?? this.isOrganic,
       isAvailable: isAvailable ?? this.isAvailable,
+      category: category ?? this.category,
     );
   }
 }

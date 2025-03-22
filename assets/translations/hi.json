@@ -1,0 +1,126 @@
+{
+  "appName": "कृषि-कनेक्ट",
+  
+  "common": {
+    "cancel": "रद्द करें",
+    "confirm": "पुष्टि करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "retry": "पुनः प्रयास करें",
+    "noData": "कोई डेटा नहीं मिला",
+    "success": "सफलता",
+    "failure": "विफलता",
+    "warning": "चेतावनी",
+    "info": "जानकारी"
+  },
+  
+  "auth": {
+    "welcome": "कृषि-कनेक्ट में आपका स्वागत है",
+    "login": "लॉगिन",
+    "register": "पंजीकरण",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "verifyPhone": "फोन सत्यापित करें",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "name": "नाम",
+    "phone": "फोन",
+    "userType": "उपयोगकर्ता प्रकार",
+    "farmer": "किसान",
+    "consumer": "उपभोक्ता"
+  },
+  
+  "navigation": {
+    "home": "होम",
+    "products": "उत्पाद",
+    "orders": "ऑर्डर",
+    "profile": "प्रोफाइल",
+    "donate": "दान करें"
+  },
+  
+  "products": {
+    "featuredProducts": "विशेष उत्पाद",
+    "allProducts": "सभी उत्पाद",
+    "addProduct": "उत्पाद जोड़ें",
+    "editProduct": "उत्पाद संपादित करें",
+    "productDetails": "उत्पाद विवरण",
+    "organicCertified": "जैविक प्रमाणित",
+    "outOfStock": "स्टॉक में नहीं है",
+    "addToCart": "कार्ट में जोड़ें",
+    "buyNow": "अभी खरीदें"
+  },
+  
+  "orders": {
+    "myOrders": "मेरे ऑर्डर",
+    "orderDetails": "ऑर्डर विवरण",
+    "orderID": "ऑर्डर आईडी",
+    "orderDate": "ऑर्डर तिथि",
+    "orderStatus": "ऑर्डर स्थिति",
+    "deliveryAddress": "डिलीवरी पता",
+    "paymentMethod": "भुगतान विधि",
+    "totalAmount": "कुल राशि",
+    "trackOrder": "ऑर्डर ट्रैक करें",
+    "cancelOrder": "ऑर्डर रद्द करें",
+    "pending": "लंबित",
+    "processing": "प्रोसेसिंग",
+    "shipped": "भेज दिया गया",
+    "delivered": "पहुंचा दिया गया", 
+    "cancelled": "रद्द कर दिया गया",
+    "rateOrder": "इस ऑर्डर को रेट करें",
+    "active": "सक्रिय",
+    "completed": "पूर्ण"
+  },
+  
+  "farmer": {
+    "farmProfile": "फार्म प्रोफाइल",
+    "myProducts": "मेरे उत्पाद",
+    "addNewProduct": "नया उत्पाद जोड़ें",
+    "farmingPractices": "खेती पद्धतियाँ",
+    "organicCertifications": "जैविक प्रमाणन",
+    "farmingHistory": "खेती का इतिहास"
+  },
+  
+  "cart": {
+    "cart": "कार्ट",
+    "checkout": "चेकआउट",
+    "continueShopping": "खरीदारी जारी रखें",
+    "placeOrder": "ऑर्डर दें",
+    "subtotal": "उप कुल",
+    "shippingFee": "शिपिंग शुल्क",
+    "tax": "कर",
+    "total": "कुल"
+  },
+  
+  "donations": {
+    "donations": "दान",
+    "supportFarmers": "किसानों का समर्थन करें",
+    "donateToNGO": "एनजीओ को दान करें",
+    "donationHistory": "दान इतिहास",
+    "donationAmount": "दान राशि",
+    "donationCertificate": "दान प्रमाणपत्र"
+  },
+  
+  "ratings": {
+    "ratings": "रेटिंग्स",
+    "reviews": "समीक्षाएँ",
+    "writeReview": "समीक्षा लिखें",
+    "rateThisProduct": "इस उत्पाद को रेट करें",
+    "rateThisFarmer": "इस किसान को रेट करें"
+  },
+  
+  "settings": {
+    "settings": "सेटिंग्स",
+    "language": "भाषा",
+    "english": "अंग्रेज़ी",
+    "hindi": "हिंदी",
+    "gujarati": "गुजराती",
+    "darkMode": "डार्क मोड",
+    "notifications": "सूचनाएँ",
+    "about": "हमारे बारे में",
+    "help": "मदद",
+    "logout": "लॉगआउट"
+  }
+} 

@@ -10,7 +10,7 @@ class OrderCard extends StatelessWidget {
   final bool isFarmerView;
   final Function(OrderStatus)? onActionPressed;
   final VoidCallback? onRatePressed;
-  
+
   const OrderCard({
     Key? key,
     required this.order,
@@ -22,7 +22,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('MMM dd, yyyy - hh:mm a');
-    
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -38,13 +38,15 @@ class OrderCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Order Header
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: _getStatusColor(order.status).withOpacity(0.1),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,10 +74,11 @@ class OrderCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 // Status Badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: _getStatusColor(order.status).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
@@ -92,24 +95,62 @@ class OrderCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Order Items
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Order Items
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: order.items.length > 2 ? 2 : order.items.length,
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemBuilder: (context, index) {
-                    final item = order.items[index];
-                    return Row(
+                // Simple item display - fixed max items
+                if (order.items.isNotEmpty)
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          '${order.items[0].quantity}x',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              order.items[0].productName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '\$${(order.items[0].price * order.items[0].quantity).toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                // Second item if available
+                if (order.items.length > 1)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Row(
                       children: [
-                        // Item Quantity
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
@@ -117,7 +158,7 @@ class OrderCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            '${item.quantity}x',
+                            '${order.items[1].quantity}x',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -125,14 +166,12 @@ class OrderCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        
-                        // Item Name & Price
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.productName,
+                                order.items[1].productName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -140,7 +179,7 @@ class OrderCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                '\$${(item.price * item.quantity).toStringAsFixed(2)}',
+                                '\$${(order.items[1].price * order.items[1].quantity).toStringAsFixed(2)}',
                                 style: const TextStyle(
                                   color: AppColors.primary,
                                 ),
@@ -149,11 +188,10 @@ class OrderCard extends StatelessWidget {
                           ),
                         ),
                       ],
-                    );
-                  },
-                ),
-                
-                // Show more items if needed
+                    ),
+                  ),
+
+                // Show more items text if needed
                 if (order.items.length > 2)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -165,9 +203,9 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                
+
                 const Divider(height: 24),
-                
+
                 // Total Amount
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -188,7 +226,7 @@ class OrderCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                
+
                 // Delivery Address (Farmer View)
                 if (isFarmerView && order.deliveryAddress != null)
                   Padding(
@@ -217,7 +255,7 @@ class OrderCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Action Buttons
           if (_showActionButtons())
             Container(
@@ -236,7 +274,7 @@ class OrderCard extends StatelessWidget {
       ),
     );
   }
-  
+
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
       case OrderStatus.pending:
@@ -253,7 +291,7 @@ class OrderCard extends StatelessWidget {
         return Colors.grey;
     }
   }
-  
+
   String _getStatusText(OrderStatus status) {
     switch (status) {
       case OrderStatus.pending:
@@ -270,19 +308,19 @@ class OrderCard extends StatelessWidget {
         return 'Unknown';
     }
   }
-  
+
   bool _showActionButtons() {
     if (isFarmerView) {
       // Farmer can update order status except when cancelled
       return order.status != OrderStatus.cancelled;
     } else {
       // Consumer can only rate delivered orders that haven't been rated
-      return order.status == OrderStatus.delivered && 
-             onRatePressed != null && 
-             !order.isRated;
+      return order.status == OrderStatus.delivered &&
+          onRatePressed != null &&
+          !order.isRated;
     }
   }
-  
+
   List<Widget> _buildActionButtons(BuildContext context) {
     if (isFarmerView) {
       // Farmer actions
@@ -290,34 +328,34 @@ class OrderCard extends StatelessWidget {
         case OrderStatus.pending:
           return [
             _buildActionButton(
-              context, 
-              'Accept', 
-              Colors.green, 
+              context,
+              'Accept',
+              Colors.green,
               () => onActionPressed?.call(OrderStatus.processing),
             ),
             const SizedBox(width: 8),
             _buildActionButton(
-              context, 
-              'Cancel', 
-              Colors.red, 
+              context,
+              'Cancel',
+              Colors.red,
               () => onActionPressed?.call(OrderStatus.cancelled),
             ),
           ];
         case OrderStatus.processing:
           return [
             _buildActionButton(
-              context, 
-              'Ship', 
-              Colors.blue, 
+              context,
+              'Ship',
+              Colors.blue,
               () => onActionPressed?.call(OrderStatus.shipped),
             ),
           ];
         case OrderStatus.shipped:
           return [
             _buildActionButton(
-              context, 
-              'Mark Delivered', 
-              Colors.green, 
+              context,
+              'Mark Delivered',
+              Colors.green,
               () => onActionPressed?.call(OrderStatus.delivered),
             ),
           ];
@@ -329,9 +367,9 @@ class OrderCard extends StatelessWidget {
       if (order.status == OrderStatus.delivered && !order.isRated) {
         return [
           _buildActionButton(
-            context, 
-            'Rate Order', 
-            AppColors.primary, 
+            context,
+            'Rate Order',
+            AppColors.primary,
             onRatePressed,
           ),
         ];
@@ -339,11 +377,11 @@ class OrderCard extends StatelessWidget {
       return [];
     }
   }
-  
+
   Widget _buildActionButton(
-    BuildContext context, 
-    String text, 
-    Color color, 
+    BuildContext context,
+    String text,
+    Color color,
     VoidCallback? onPressed,
   ) {
     return ElevatedButton(
