@@ -137,3 +137,216 @@ class LocalizedProductCard extends StatelessWidget {
 ///   },
 /// )
 /// ```
+
+/// This example demonstrates how to use the localization system in the app
+class LocalizationExample extends StatelessWidget {
+  const LocalizationExample({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Get the localization helper instance for the current context
+    final loc = LocalizationHelper.of(context);
+
+    return Scaffold(
+      // Use localized app name in the app bar
+      appBar: AppBar(
+        title: Text(loc.appName),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Section title
+            Text(
+              "Localization Examples",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 20),
+
+            // Example card for basic text
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Basic Text Example",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const Divider(),
+                    ListTile(
+                      title: Text("Hello"),
+                      subtitle: Text(loc.authWelcome),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Example card for buttons and actions
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Buttons and Actions",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const Divider(),
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text(loc.commonSave),
+                        ),
+                        OutlinedButton(
+                          onPressed: () {},
+                          child: Text(loc.commonCancel),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(loc.commonConfirm),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Example card for form fields
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Form Fields",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const Divider(),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: loc.authEmail,
+                        hintText: "example@email.com",
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: loc.authPassword,
+                        hintText: "••••••••",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Example card for error messages
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Error Messages",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const Divider(),
+                    Text(
+                      loc.commonError,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Network connection failed",
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Example card for product information
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Product Information",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const Divider(),
+                    ListTile(
+                      title: Text(loc.productsTitle),
+                      subtitle: Text(loc.productsDetails),
+                      trailing: Text(
+                        "₹100",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Price: ₹100"),
+                          Text("${loc.cartTax}: ₹5"),
+                          Text(
+                            "${loc.cartTotal}: ₹105",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// How to use this example:
+///
+/// 1. Import the localization helper in your file:
+///    ```dart
+///    import 'package:your_app/utils/localization_helper.dart';
+///    ```
+///
+/// 2. In your build method, get the localization instance:
+///    ```dart
+///    final loc = LocalizationHelper.of(context);
+///    ```
+///
+/// 3. Use the localized strings in your widgets:
+///    ```dart
+///    Text(loc.someKey)
+///    ```
+///
+/// 4. To add new strings:
+///    - Add them to assets/translations/app_en.arb (and other language files)
+///    - Run 'flutter gen-l10n' to generate the updated AppLocalizations class
+///    - Access them through the loc helper

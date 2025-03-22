@@ -185,6 +185,8 @@ class LocalizationHelper {
         return localizations.cartTax;
       case 'cartTotal':
         return localizations.cartTotal;
+      case 'cartPrice':
+        return localizations.cartPrice;
 
       // Donations
       case 'donationsTitle':
@@ -199,6 +201,8 @@ class LocalizationHelper {
         return localizations.donationsAmount;
       case 'donationsCertificate':
         return localizations.donationsCertificate;
+      case 'donationError':
+        return localizations.donationError;
 
       // Ratings
       case 'ratingsTitle':

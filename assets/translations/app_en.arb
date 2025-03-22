@@ -82,6 +82,7 @@
   "cartShipping": "Shipping Fee",
   "cartTax": "Tax",
   "cartTotal": "Total",
+  "cartPrice": "Price",
   
   "donationsTitle": "Donations",
   "donationsSupportFarmers": "Support Farmers",
@@ -109,5 +110,15 @@
   
   "languageSettings": "Language Settings",
   "languageSelect": "Select your preferred language",
-  "languageNote": "The app will use the selected language for all text content."
+  "languageNote": "The app will use the selected language for all text content.",
+  
+  "donationError": "An error occurred while processing your donation.",
+  
+  "localizationExamples": "Localization Examples",
+  "basicTextExample": "Basic Text Example",
+  "hello": "Hello",
+  "buttonsAndActions": "Buttons and Actions",
+  "formFields": "Form Fields",
+  "errorMessages": "Error Messages",
+  "productInfo": "Product Information"
 } 

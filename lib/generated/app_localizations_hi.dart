@@ -234,6 +234,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get cartTotal => 'कुल';
 
   @override
+  String get cartPrice => 'मूल्य';
+
+  @override
   String get donationsTitle => 'दान';
 
   @override
@@ -304,4 +307,28 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get languageNote => 'ऐप सभी टेक्स्ट सामग्री के लिए चयनित भाषा का उपयोग करेगा।';
+
+  @override
+  String get donationError => 'An error occurred while processing your donation.';
+
+  @override
+  String get localizationExamples => 'Localization Examples';
+
+  @override
+  String get basicTextExample => 'Basic Text Example';
+
+  @override
+  String get hello => 'Hello';
+
+  @override
+  String get buttonsAndActions => 'Buttons and Actions';
+
+  @override
+  String get formFields => 'Form Fields';
+
+  @override
+  String get errorMessages => 'Error Messages';
+
+  @override
+  String get productInfo => 'Product Information';
 }

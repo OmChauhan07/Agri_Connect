@@ -547,6 +547,12 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get cartTotal;
 
+  /// No description provided for @cartPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get cartPrice;
+
   /// No description provided for @donationsTitle.
   ///
   /// In en, this message translates to:
@@ -690,6 +696,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The app will use the selected language for all text content.'**
   String get languageNote;
+
+  /// No description provided for @donationError.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while processing your donation.'**
+  String get donationError;
+
+  /// No description provided for @localizationExamples.
+  ///
+  /// In en, this message translates to:
+  /// **'Localization Examples'**
+  String get localizationExamples;
+
+  /// No description provided for @basicTextExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Text Example'**
+  String get basicTextExample;
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello'**
+  String get hello;
+
+  /// No description provided for @buttonsAndActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Buttons and Actions'**
+  String get buttonsAndActions;
+
+  /// No description provided for @formFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Form Fields'**
+  String get formFields;
+
+  /// No description provided for @errorMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Messages'**
+  String get errorMessages;
+
+  /// No description provided for @productInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Information'**
+  String get productInfo;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -234,6 +234,9 @@ class AppLocalizationsGu extends AppLocalizations {
   String get cartTotal => 'કુલ';
 
   @override
+  String get cartPrice => 'કિંમત';
+
+  @override
   String get donationsTitle => 'દાન';
 
   @override
@@ -304,4 +307,28 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get languageNote => 'એપ્લિકેશન બધા ટેક્સ્ટ કન્ટેન્ટ માટે પસંદ કરેલી ભાષાનો ઉપયોગ કરશે.';
+
+  @override
+  String get donationError => 'An error occurred while processing your donation.';
+
+  @override
+  String get localizationExamples => 'Localization Examples';
+
+  @override
+  String get basicTextExample => 'Basic Text Example';
+
+  @override
+  String get hello => 'Hello';
+
+  @override
+  String get buttonsAndActions => 'Buttons and Actions';
+
+  @override
+  String get formFields => 'Form Fields';
+
+  @override
+  String get errorMessages => 'Error Messages';
+
+  @override
+  String get productInfo => 'Product Information';
 }
