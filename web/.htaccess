@@ -1,0 +1,22 @@
+# Ensure correct MIME types for Flutter web assets
+AddType application/javascript .js
+AddType application/wasm .wasm
+AddType text/css .css
+
+# Set proper caching headers
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/wasm "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+# Enable CORS
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Handle errors
+ErrorDocument 404 /index.html
