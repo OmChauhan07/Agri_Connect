@@ -15,16 +15,19 @@ class DonationScreen extends StatefulWidget {
   State<DonationScreen> createState() => _DonationScreenState();
 }
 
-class _DonationScreenState extends State<DonationScreen> with SingleTickerProviderStateMixin {
+class _DonationScreenState extends State<DonationScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _amountController = TextEditingController();
   NGO? _selectedNGO;
-  
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _loadData();
+
+    // Use Future.microtask to avoid calling setState during build
+    Future.microtask(() => _loadData());
   }
 
   @override
@@ -33,11 +36,11 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
     _amountController.dispose();
     super.dispose();
   }
-  
+
   Future<void> _loadData() async {
     final ngoProvider = Provider.of<NGOProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    
+
     await ngoProvider.loadNGOs();
     if (authProvider.currentUser != null) {
       await ngoProvider.loadUserDonations(authProvider.currentUser!.id);
@@ -47,14 +50,14 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
   Future<void> _makeDonation() async {
     final ngoProvider = Provider.of<NGOProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    
+
     if (_selectedNGO == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please select an NGO')),
       );
       return;
     }
-    
+
     final amount = double.tryParse(_amountController.text);
     if (amount == null || amount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -62,7 +65,7 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
       );
       return;
     }
-    
+
     // Show loading dialog
     showDialog(
       context: context,
@@ -78,26 +81,28 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
         ),
       ),
     );
-    
+
     final success = await ngoProvider.createDonation(
       consumerId: authProvider.currentUser!.id,
       ngoId: _selectedNGO!.id,
       amount: amount,
     );
-    
+
     // Pop loading dialog
     Navigator.pop(context);
-    
+
     if (success) {
       // Get the latest donation (which should be at index 0)
-      final latestDonation = ngoProvider.userDonations.isNotEmpty ? ngoProvider.userDonations[0] : null;
-      
+      final latestDonation = ngoProvider.userDonations.isNotEmpty
+          ? ngoProvider.userDonations[0]
+          : null;
+
       // Reset form
       setState(() {
         _selectedNGO = null;
         _amountController.clear();
       });
-      
+
       // Show success dialog with certificate
       showDialog(
         context: context,
@@ -167,7 +172,9 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(ngoProvider.error ?? 'Failed to process donation. Please try again.')),
+        SnackBar(
+            content: Text(ngoProvider.error ??
+                'Failed to process donation. Please try again.')),
       );
     }
   }
@@ -190,7 +197,7 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
           if (ngoProvider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           if (ngoProvider.error != null) {
             return Center(
               child: Column(
@@ -210,13 +217,13 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
               ),
             );
           }
-          
+
           return TabBarView(
             controller: _tabController,
             children: [
               // Donate Tab
               _buildDonateTab(ngoProvider),
-              
+
               // History Tab
               _buildHistoryTab(ngoProvider),
             ],
@@ -225,7 +232,7 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
       ),
     );
   }
-  
+
   Widget _buildDonateTab(NGOProvider ngoProvider) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -263,7 +270,7 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
             itemBuilder: (context, index) {
               final ngo = ngoProvider.ngos[index];
               final isSelected = _selectedNGO?.id == ngo.id;
-              
+
               return NGOCard(
                 ngo: ngo,
                 isSelected: isSelected,
@@ -315,7 +322,7 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
       ),
     );
   }
-  
+
   Widget _buildHistoryTab(NGOProvider ngoProvider) {
     if (ngoProvider.userDonations.isEmpty) {
       return const Center(
@@ -325,7 +332,7 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
         ),
       );
     }
-    
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: ngoProvider.userDonations.length,

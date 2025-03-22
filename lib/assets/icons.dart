@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppIcons {
   // Custom SVG icons as strings
@@ -66,56 +67,38 @@ class AppIcons {
 </svg>
 ''';
 
-  // SVG to Widget conversion helper (in a real app, you'd use a library like flutter_svg)
+  // SVG to Widget conversion using flutter_svg
   static Widget svgIcon(String svgString, {double? size, Color? color}) {
-    // This is a placeholder as we can't render SVG directly
-    // In a real app, you would use flutter_svg package
-    return Icon(
-      _getPlaceholderIcon(svgString),
-      size: size,
-      color: color,
+    return SvgPicture.string(
+      svgString,
+      width: size,
+      height: size,
+      colorFilter:
+          color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null,
     );
   }
-  
-  // Get placeholder icon based on SVG content
-  static IconData _getPlaceholderIcon(String svgString) {
-    if (svgString == _farmerIconSvg) {
-      return Icons.agriculture;
-    } else if (svgString == _consumerIconSvg) {
-      return Icons.person;
-    } else if (svgString == _organicIconSvg) {
-      return Icons.eco;
-    } else if (svgString == _cartIconSvg) {
-      return Icons.shopping_cart;
-    } else if (svgString == _qrCodeIconSvg) {
-      return Icons.qr_code;
-    } else if (svgString == _productsIconSvg) {
-      return Icons.shopping_bag;
-    }
-    return Icons.image;
-  }
-  
+
   // App Icon getters
   static Widget farmerIcon({double? size, Color? color}) {
     return svgIcon(_farmerIconSvg, size: size, color: color);
   }
-  
+
   static Widget consumerIcon({double? size, Color? color}) {
     return svgIcon(_consumerIconSvg, size: size, color: color);
   }
-  
+
   static Widget organicIcon({double? size, Color? color}) {
     return svgIcon(_organicIconSvg, size: size, color: color);
   }
-  
+
   static Widget cartIcon({double? size, Color? color}) {
     return svgIcon(_cartIconSvg, size: size, color: color);
   }
-  
+
   static Widget qrCodeIcon({double? size, Color? color}) {
     return svgIcon(_qrCodeIconSvg, size: size, color: color);
   }
-  
+
   static Widget productsIcon({double? size, Color? color}) {
     return svgIcon(_productsIconSvg, size: size, color: color);
   }

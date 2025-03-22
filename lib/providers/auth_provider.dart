@@ -8,18 +8,18 @@ import '../services/storage_service.dart';
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
   final StorageService _storageService = StorageService();
-  
+
   UserModel? _currentUser;
   bool _isLoading = false;
-  
+
   UserModel? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
-  
+
   // Initialize
   Future<void> initialize() async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       _currentUser = await _authService.getUser();
     } catch (e) {
@@ -29,18 +29,13 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // Sign Up
-  Future<void> signup(
-    String email, 
-    String password, 
-    String name, 
-    String phone, 
-    UserRole role
-  ) async {
+  Future<void> signup(String email, String password, String name, String phone,
+      UserRole role) async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       await _authService.signUp(email, password, name, phone, role);
     } finally {
@@ -48,12 +43,12 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // Login
   Future<void> login(String email, String password) async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       _currentUser = await _authService.signIn(email, password);
     } finally {
@@ -61,26 +56,37 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // Logout
   Future<void> logout() async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
-      await _authService.signOut();
+      // First clear the current user
       _currentUser = null;
+
+      // Then sign out from Supabase
+      await _authService.signOut();
+
+      // Additional cleanup can be added here if needed
+      debugPrint('User logged out successfully');
+    } catch (e) {
+      debugPrint('Error during logout: ${e.toString()}');
+      // Even if there's an error, we still want to clear the user data
+      _currentUser = null;
+      rethrow; // Rethrow to let the UI handle the error
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
-  
+
   // Reset Password
   Future<void> resetPassword(String email) async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       await _authService.resetPassword(email);
     } finally {
@@ -88,12 +94,12 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // Update User Profile
   Future<void> updateUserProfile(UserModel user) async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       await _authService.updateUserProfile(user);
       _currentUser = user;
@@ -102,25 +108,26 @@ class AuthProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  
+
   // Upload Profile Image
   Future<String> uploadProfileImage(XFile image) async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       if (_currentUser == null) {
         throw Exception('User not logged in');
       }
-      
-      final imageUrl = await _storageService.uploadProfileImage(image, _currentUser!.id);
+
+      final imageUrl =
+          await _storageService.uploadProfileImage(image, _currentUser!.id);
       return imageUrl;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
-  
+
   // Get Featured Farmers
   Future<List<UserModel>> getFeaturedFarmers() async {
     try {
@@ -130,7 +137,7 @@ class AuthProvider with ChangeNotifier {
       return [];
     }
   }
-  
+
   // Get User by ID
   Future<UserModel?> getUserById(String userId) async {
     try {

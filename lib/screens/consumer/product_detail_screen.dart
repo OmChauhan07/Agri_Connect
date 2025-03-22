@@ -5,21 +5,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import '../../models/product.dart';
 import '../../models/user.dart';
-import '../../providers/auth_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../utils/constants.dart';
-import '../../utils/theme.dart';
 import '../../widgets/rating_bar.dart';
 import '../../widgets/badge_icon.dart';
 import 'checkout_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String productId;
-  
+
   const ProductDetailScreen({
-    Key? key,
+    super.key,
     required this.productId,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -31,45 +29,53 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   UserModel? _farmer;
   int _quantity = 1;
   int _currentImageIndex = 0;
-  
+
   @override
   void initState() {
     super.initState();
     _loadProductDetails();
   }
-  
+
   Future<void> _loadProductDetails() async {
     setState(() {
       _isLoading = true;
     });
 
     try {
-      final productProvider = Provider.of<ProductProvider>(context, listen: false);
-      
+      final productProvider =
+          Provider.of<ProductProvider>(context, listen: false);
+
       // Fetch product details
       final product = await productProvider.getProductById(widget.productId);
       setState(() {
         _product = product;
       });
-      
+
       // Fetch farmer details
       if (product != null) {
         final farmer = await productProvider.getFarmerById(product.farmerId);
-        setState(() {
-          _farmer = farmer;
-        });
+        if (mounted) {
+          setState(() {
+            _farmer = farmer;
+          });
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading product details: ${e.toString()}')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Error loading product details: ${e.toString()}')),
+        );
+      }
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
-  
+
   void _incrementQuantity() {
     if (_product != null && _quantity < _product!.stockQuantity) {
       setState(() {
@@ -81,7 +87,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       );
     }
   }
-  
+
   void _decrementQuantity() {
     if (_quantity > 1) {
       setState(() {
@@ -89,10 +95,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       });
     }
   }
-  
+
   void _proceedToCheckout() {
     if (_product == null) return;
-    
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -105,7 +111,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -125,7 +131,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       );
     }
-    
+
     if (_product == null) {
       return Scaffold(
         appBar: AppBar(
@@ -170,9 +176,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       );
     }
-    
+
     final dateFormat = DateFormat('MMM dd, yyyy');
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -189,7 +195,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 leading: Container(
                   margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(
+                        alpha: 230, red: 255, green: 255, blue: 255),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -202,7 +209,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Container(
                     margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(
+                          alpha: 230, red: 255, green: 255, blue: 255),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
@@ -210,19 +218,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       onPressed: () {
                         // TODO: Implement share functionality
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Share feature coming soon')),
+                          const SnackBar(
+                              content: Text('Share feature coming soon')),
                         );
                       },
                     ),
                   ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
-                  background: _product.imageUrls.isNotEmpty
+                  background: _product!.imageUrls.isNotEmpty
                       ? Stack(
                           children: [
                             // Image Carousel
                             CarouselSlider(
-                              items: _product.imageUrls.map((url) {
+                              items: _product!.imageUrls.map((url) {
                                 return Image.network(
                                   url,
                                   fit: BoxFit.cover,
@@ -238,36 +247,44 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     _currentImageIndex = index;
                                   });
                                 },
-                                autoPlay: _product.imageUrls.length > 1,
+                                autoPlay: _product!.imageUrls.length > 1,
                               ),
                             ),
-                            
+
                             // Image Indicators
-                            if (_product.imageUrls.length > 1)
+                            if (_product!.imageUrls.length > 1)
                               Positioned(
                                 bottom: 16,
                                 left: 0,
                                 right: 0,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: _product.imageUrls.asMap().entries.map((entry) {
+                                  children: _product!.imageUrls
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
                                     return Container(
                                       width: 8,
                                       height: 8,
-                                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 4),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: _currentImageIndex == entry.key
                                             ? AppColors.primary
-                                            : Colors.white.withOpacity(0.5),
+                                            : Colors.white.withValues(
+                                                alpha: 128,
+                                                red: 255,
+                                                green: 255,
+                                                blue: 255),
                                       ),
                                     );
                                   }).toList(),
                                 ),
                               ),
-                            
+
                             // Organic Badge
-                            if (_product.isOrganic)
+                            if (_product!.isOrganic)
                               Positioned(
                                 top: 16,
                                 right: 16,
@@ -282,7 +299,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                   child: const Row(
                                     children: [
-                                      Icon(Icons.eco, color: Colors.white, size: 16),
+                                      Icon(Icons.eco,
+                                          color: Colors.white, size: 16),
                                       SizedBox(width: 4),
                                       Text(
                                         'Organic',
@@ -309,7 +327,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                 ),
               ),
-              
+
               // Product Details
               SliverToBoxAdapter(
                 child: Padding(
@@ -325,7 +343,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           // Product Name
                           Expanded(
                             child: Text(
-                              _product.name,
+                              _product!.name,
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -334,7 +352,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           // Product Price
                           Text(
-                            '\$${_product.price.toStringAsFixed(2)}',
+                            '\$${_product!.price.toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -344,17 +362,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      
+
                       // Rating
                       Row(
                         children: [
                           RatingBarDisplay(
-                            rating: _product.rating ?? 0,
+                            rating: _product!.rating ?? 0,
                             size: 20,
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            '(${_product.totalRatings ?? 0} ratings)',
+                            '(${_product!.totalRatings ?? 0} ratings)',
                             style: TextStyle(
                               color: Colors.grey[600],
                             ),
@@ -362,7 +380,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      
+
                       // Availability Status
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -370,17 +388,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: _product.isAvailable && _product.stockQuantity > 0
+                          color: _product!.isAvailable &&
+                                  _product!.stockQuantity > 0
                               ? Colors.green[100]
                               : Colors.red[100],
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          _product.isAvailable && _product.stockQuantity > 0
-                              ? 'In Stock (${_product.stockQuantity} available)'
+                          _product!.isAvailable && _product!.stockQuantity > 0
+                              ? 'In Stock (${_product!.stockQuantity} available)'
                               : 'Out of Stock',
                           style: TextStyle(
-                            color: _product.isAvailable && _product.stockQuantity > 0
+                            color: _product!.isAvailable &&
+                                    _product!.stockQuantity > 0
                                 ? Colors.green[800]
                                 : Colors.red[800],
                             fontWeight: FontWeight.bold,
@@ -388,7 +408,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      
+
                       // Farmer Info
                       if (_farmer != null)
                         GestureDetector(
@@ -427,7 +447,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 // Farmer Name & Rating
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -439,7 +460,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           ),
                                           if (_farmer!.badgeType != null)
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 4),
+                                              padding: const EdgeInsets.only(
+                                                  left: 4),
                                               child: BadgeIcon(
                                                 badgeType: _farmer!.badgeType!,
                                                 size: 14,
@@ -477,7 +499,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       const SizedBox(height: 24),
-                      
+
                       // Product Details
                       const Text(
                         'Product Details',
@@ -488,14 +510,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        _product.description,
+                        _product!.description,
                         style: TextStyle(
                           color: Colors.grey[800],
                           height: 1.5,
                         ),
                       ),
                       const SizedBox(height: 24),
-                      
+
                       // Product Dates
                       const Text(
                         'Important Dates',
@@ -515,7 +537,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Harvest Date: ${dateFormat.format(_product.harvestDate)}',
+                            'Harvest Date: ${dateFormat.format(_product!.harvestDate)}',
                             style: TextStyle(
                               color: Colors.grey[800],
                             ),
@@ -533,7 +555,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Best Before: ${dateFormat.format(_product.bestBeforeDate)}',
+                            'Best Before: ${dateFormat.format(_product!.bestBeforeDate)}',
                             style: TextStyle(
                               color: Colors.grey[800],
                             ),
@@ -547,7 +569,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ],
           ),
-          
+
           // Bottom Action Bar
           Positioned(
             bottom: 0,
@@ -559,7 +581,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey
+                        .withValues(alpha: 51, red: 158, green: 158, blue: 158),
                     spreadRadius: 1,
                     blurRadius: 5,
                     offset: const Offset(0, -2),
@@ -580,7 +603,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         IconButton(
                           icon: const Icon(Icons.remove),
                           onPressed: _quantity > 1 ? _decrementQuantity : null,
-                          color: _quantity > 1 ? AppColors.primary : Colors.grey,
+                          color:
+                              _quantity > 1 ? AppColors.primary : Colors.grey,
                         ),
                         // Quantity
                         Text(
@@ -593,8 +617,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         // Plus Button
                         IconButton(
                           icon: const Icon(Icons.add),
-                          onPressed: _product.stockQuantity > _quantity ? _incrementQuantity : null,
-                          color: _product.stockQuantity > _quantity ? AppColors.primary : Colors.grey,
+                          onPressed: _product!.stockQuantity > _quantity
+                              ? _incrementQuantity
+                              : null,
+                          color: _product!.stockQuantity > _quantity
+                              ? AppColors.primary
+                              : Colors.grey,
                         ),
                       ],
                     ),
@@ -603,9 +631,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   // Buy Now Button
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: _product.isAvailable && _product.stockQuantity > 0
-                          ? _proceedToCheckout
-                          : null,
+                      onPressed:
+                          _product!.isAvailable && _product!.stockQuantity > 0
+                              ? _proceedToCheckout
+                              : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         padding: const EdgeInsets.symmetric(vertical: 16),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
-import '../utils/theme.dart';
+import '../utils/constants.dart';
 import 'badge_icon.dart';
 import 'rating_bar.dart';
 
@@ -9,13 +9,13 @@ class FarmerCard extends StatelessWidget {
   final UserModel farmer;
   final bool isGridView;
   final VoidCallback? onTap;
-  
+
   const FarmerCard({
-    Key? key,
+    super.key,
     required this.farmer,
     this.isGridView = true,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class FarmerCard extends StatelessWidget {
       return _buildListCard(context);
     }
   }
-  
+
   // Grid View Card
   Widget _buildGridCard(BuildContext context) {
     return GestureDetector(
@@ -37,7 +37,8 @@ class FarmerCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey
+                  .withValues(alpha: 26, red: 158, green: 158, blue: 158),
               spreadRadius: 1,
               blurRadius: 4,
               offset: const Offset(0, 2),
@@ -65,7 +66,7 @@ class FarmerCard extends StatelessWidget {
                         )
                       : null,
                 ),
-                
+
                 // Badge
                 if (farmer.badgeType != null)
                   Positioned(
@@ -78,7 +79,8 @@ class FarmerCard extends StatelessWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(
+                                alpha: 26, red: 0, green: 0, blue: 0),
                             spreadRadius: 1,
                             blurRadius: 2,
                           ),
@@ -90,7 +92,7 @@ class FarmerCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            
+
             // Farmer Name
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -106,7 +108,7 @@ class FarmerCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            
+
             // Rating
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +128,7 @@ class FarmerCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // View Button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -151,7 +153,7 @@ class FarmerCard extends StatelessWidget {
       ),
     );
   }
-  
+
   // List View Card
   Widget _buildListCard(BuildContext context) {
     return GestureDetector(
@@ -162,7 +164,8 @@ class FarmerCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey
+                  .withValues(alpha: 26, red: 158, green: 158, blue: 158),
               spreadRadius: 1,
               blurRadius: 4,
               offset: const Offset(0, 2),
@@ -191,7 +194,7 @@ class FarmerCard extends StatelessWidget {
                           )
                         : null,
                   ),
-                  
+
                   // Badge
                   if (farmer.badgeType != null)
                     Positioned(
@@ -204,19 +207,21 @@ class FarmerCard extends StatelessWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(
+                                  alpha: 26, red: 0, green: 0, blue: 0),
                               spreadRadius: 1,
                               blurRadius: 2,
                             ),
                           ],
                         ),
-                        child: BadgeIcon(badgeType: farmer.badgeType!, size: 20),
+                        child:
+                            BadgeIcon(badgeType: farmer.badgeType!, size: 20),
                       ),
                     ),
                 ],
               ),
               const SizedBox(width: 16),
-              
+
               // Farmer Details
               Expanded(
                 child: Column(
@@ -233,7 +238,7 @@ class FarmerCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    
+
                     // Rating
                     Row(
                       children: [
@@ -252,7 +257,7 @@ class FarmerCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    
+
                     // Farmer Location
                     if (farmer.address != null)
                       Row(
@@ -279,11 +284,12 @@ class FarmerCard extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // View Button
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary
+                      .withValues(alpha: 26, red: 76, green: 175, blue: 80),
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(

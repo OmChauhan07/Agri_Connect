@@ -17,7 +17,8 @@ class ConsumerOrdersScreen extends StatefulWidget {
   State<ConsumerOrdersScreen> createState() => _ConsumerOrdersScreenState();
 }
 
-class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with SingleTickerProviderStateMixin {
+class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isLoading = true;
   List<Order> _activeOrders = [];
@@ -28,7 +29,9 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _loadOrders();
+
+    // Use Future.microtask to avoid calling setState during build
+    Future.microtask(() => _loadOrders());
   }
 
   @override
@@ -43,31 +46,33 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
     });
 
     try {
-      final user = Provider.of<AuthProvider>(context, listen: false).currentUser;
+      final user =
+          Provider.of<AuthProvider>(context, listen: false).currentUser;
       if (user == null) return;
 
       final orderProvider = Provider.of<OrderProvider>(context, listen: false);
       await orderProvider.fetchConsumerOrders(user.id);
-      
+
       final allOrders = orderProvider.consumerOrders;
-      
+
       setState(() {
         // Active orders: pending, processing, shipped
-        _activeOrders = allOrders.where((order) => 
-          order.status == OrderStatus.pending || 
-          order.status == OrderStatus.processing ||
-          order.status == OrderStatus.shipped
-        ).toList();
-        
+        _activeOrders = allOrders
+            .where((order) =>
+                order.status == OrderStatus.pending ||
+                order.status == OrderStatus.processing ||
+                order.status == OrderStatus.shipped)
+            .toList();
+
         // Completed orders: delivered
-        _completedOrders = allOrders.where((order) => 
-          order.status == OrderStatus.delivered
-        ).toList();
-        
+        _completedOrders = allOrders
+            .where((order) => order.status == OrderStatus.delivered)
+            .toList();
+
         // Cancelled orders
-        _cancelledOrders = allOrders.where((order) => 
-          order.status == OrderStatus.cancelled
-        ).toList();
+        _cancelledOrders = allOrders
+            .where((order) => order.status == OrderStatus.cancelled)
+            .toList();
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,7 +106,7 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
               ],
             ),
           ),
-          
+
           // Tab Content
           Expanded(
             child: _isLoading
@@ -123,7 +128,7 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
       ),
     );
   }
-  
+
   Widget _buildTab(String title, int count) {
     return Tab(
       child: Row(
@@ -149,7 +154,7 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
       ),
     );
   }
-  
+
   Widget _buildOrdersList(List<Order> orders, String type) {
     if (orders.isEmpty) {
       return Center(
@@ -157,9 +162,11 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              type == 'active' ? Icons.shopping_bag_outlined :
-              type == 'completed' ? Icons.check_circle_outline :
-              Icons.cancel_outlined,
+              type == 'active'
+                  ? Icons.shopping_bag_outlined
+                  : type == 'completed'
+                      ? Icons.check_circle_outline
+                      : Icons.cancel_outlined,
               size: 64,
               color: Colors.grey[400],
             ),
@@ -173,17 +180,18 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
             ),
             const SizedBox(height: 8),
             Text(
-              type == 'active' ? 'Your current orders will appear here' :
-              type == 'completed' ? 'Your completed orders will appear here' :
-              'Your cancelled orders will appear here',
+              type == 'active'
+                  ? 'Your current orders will appear here'
+                  : type == 'completed'
+                      ? 'Your completed orders will appear here'
+                      : 'Your cancelled orders will appear here',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[500],
               ),
               textAlign: TextAlign.center,
             ),
-            if (type != 'active')
-              const SizedBox(height: 24),
+            if (type != 'active') const SizedBox(height: 24),
             if (type != 'active')
               ElevatedButton(
                 onPressed: () {
@@ -203,7 +211,7 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
         ),
       );
     }
-    
+
     return RefreshIndicator(
       onRefresh: _loadOrders,
       color: AppColors.primary,
@@ -224,82 +232,80 @@ class _ConsumerOrdersScreenState extends State<ConsumerOrdersScreen> with Single
       ),
     );
   }
-  
+
   Future<void> _showRatingDialog(Order order) async {
     double rating = 5.0;
     final TextEditingController commentController = TextEditingController();
-    
+
     return showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            title: const Text('Rate Your Order'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('How would you rate your experience?'),
-                  const SizedBox(height: 16),
-                  RatingBar(
-                    initialRating: rating,
-                    onRatingChanged: (value) {
-                      setState(() {
-                        rating = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: commentController,
-                    maxLines: 3,
-                    decoration: const InputDecoration(
-                      hintText: 'Add a comment (optional)',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _submitRating(order, rating, commentController.text);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+      builder: (context) => StatefulBuilder(builder: (context, setState) {
+        return AlertDialog(
+          title: const Text('Rate Your Order'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('How would you rate your experience?'),
+                const SizedBox(height: 16),
+                RatingBar(
+                  initialRating: rating,
+                  onRatingChanged: (value) {
+                    setState(() {
+                      rating = value;
+                    });
+                  },
                 ),
-                child: const Text('Submit'),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: commentController,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    hintText: 'Add a comment (optional)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _submitRating(order, rating, commentController.text);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
               ),
-            ],
-          );
-        }
-      ),
+              child: const Text('Submit'),
+            ),
+          ],
+        );
+      }),
     );
   }
-  
+
   Future<void> _submitRating(Order order, double rating, String comment) async {
     try {
       final orderProvider = Provider.of<OrderProvider>(context, listen: false);
-      
+
       // Mark the order as rated
       final updatedOrder = order.copyWith(isRated: true);
-      
+
       // Submit the rating for both the farmer and the products
       await orderProvider.rateOrder(updatedOrder, rating, comment);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Thank you for your feedback!'),
           backgroundColor: Colors.green,
         ),
       );
-      
+
       // Refresh orders
       _loadOrders();
     } catch (e) {
