@@ -48,7 +48,7 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         title: const Text(
           'AgriConnect',
@@ -102,7 +102,7 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
           onTap: _onTabTapped,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          selectedItemColor: AppColors.primaryColor,
+          selectedItemColor: AppColors.primary,
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
@@ -181,11 +181,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     
     return RefreshIndicator(
       onRefresh: _loadProducts,
-      color: AppColors.primaryColor,
+      color: AppColors.primary,
       child: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+                color: AppColors.primary,
               ),
             )
           : SingleChildScrollView(
@@ -196,7 +196,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                   // Search Bar
                   Container(
                     padding: const EdgeInsets.all(16),
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                     child: TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
@@ -246,7 +246,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               child: const Text(
                                 'See All',
                                 style: TextStyle(
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -389,7 +389,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                               child: const Text(
                                 'See All',
                                 style: TextStyle(
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -480,7 +480,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                     Text(
                                                       '\$${product.price.toStringAsFixed(2)}',
                                                       style: const TextStyle(
-                                                        color: AppColors.primaryColor,
+                                                        color: AppColors.primary,
                                                         fontWeight: FontWeight.bold,
                                                       ),
                                                     ),
@@ -655,7 +655,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                 Text(
                                                   '\$${product.price.toStringAsFixed(2)}',
                                                   style: const TextStyle(
-                                                    color: AppColors.primaryColor,
+                                                    color: AppColors.primary,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),

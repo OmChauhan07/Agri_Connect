@@ -148,7 +148,7 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
             key: _qrKey,
             onQRViewCreated: _onQRViewCreated,
             overlay: QrScannerOverlayShape(
-              borderColor: AppColors.primaryColor,
+              borderColor: AppColors.primary,
               borderRadius: 10,
               borderLength: 30,
               borderWidth: 10,

@@ -135,7 +135,7 @@ class FarmerCard extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onTap,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
+                    backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -283,14 +283,14 @@ class FarmerCard extends StatelessWidget {
               // View Button
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primary.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
                   icon: const Icon(
                     Icons.arrow_forward_ios,
                     size: 16,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                   onPressed: onTap,
                 ),

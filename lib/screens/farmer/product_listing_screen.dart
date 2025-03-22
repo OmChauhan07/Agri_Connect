@@ -178,7 +178,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: _isGridView
-                                    ? AppColors.primaryColor
+                                    ? AppColors.primary
                                     : Colors.transparent,
                                 borderRadius: const BorderRadius.horizontal(
                                   left: Radius.circular(9),
@@ -201,7 +201,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: !_isGridView
-                                    ? AppColors.primaryColor
+                                    ? AppColors.primary
                                     : Colors.transparent,
                                 borderRadius: const BorderRadius.horizontal(
                                   right: Radius.circular(9),
@@ -227,7 +227,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
             child: _isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
+                      color: AppColors.primary,
                     ),
                   )
                 : _filteredProducts.isEmpty
@@ -261,7 +261,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                               icon: const Icon(Icons.add),
                               label: const Text('Add New Product'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
+                                backgroundColor: AppColors.primary,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24,
                                   vertical: 12,
@@ -273,7 +273,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
                       )
                     : RefreshIndicator(
                         onRefresh: _loadProducts,
-                        color: AppColors.primaryColor,
+                        color: AppColors.primary,
                         child: _isGridView
                             ? GridView.builder(
                                 padding: const EdgeInsets.all(16),
@@ -319,7 +319,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(

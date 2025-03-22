@@ -99,7 +99,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: const Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                 ),
               )
@@ -110,7 +110,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
+                      color: AppColors.primary,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Row(
@@ -121,7 +121,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                           child: Icon(
                             Icons.person,
                             size: 40,
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -252,7 +252,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                         child: const Text(
                           'View All',
                           style: TextStyle(
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                           ),
                         ),
                       ),
@@ -291,7 +291,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                                     Navigator.pushNamed(context, '/add-product');
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryColor,
+                                    backgroundColor: AppColors.primary,
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
                                   ),
                                   child: const Text('Add Product'),

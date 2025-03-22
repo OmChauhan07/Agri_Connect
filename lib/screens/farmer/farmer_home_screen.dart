@@ -48,7 +48,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         title: const Text(
           'AgriConnect',
@@ -94,7 +94,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
           onTap: _onTabTapped,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          selectedItemColor: AppColors.primaryColor,
+          selectedItemColor: AppColors.primary,
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
@@ -118,7 +118,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
       ),
       floatingActionButton: _currentIndex == 1
           ? FloatingActionButton(
-              backgroundColor: AppColors.primaryColor,
+              backgroundColor: AppColors.primary,
               child: const Icon(Icons.add),
               onPressed: () {
                 // Navigate to add product screen

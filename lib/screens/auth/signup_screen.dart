@@ -82,10 +82,10 @@ class _SignupScreenState extends State<SignupScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: AppColors.primaryColor),
+        iconTheme: const IconThemeData(color: AppColors.primary),
         title: const Text(
           'Create Account',
-          style: TextStyle(color: AppColors.primaryColor),
+          style: TextStyle(color: AppColors.primary),
         ),
       ),
       body: SafeArea(
@@ -100,7 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
+                  color: AppColors.primary,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
@@ -217,7 +217,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               value: UserRole.farmer,
                               child: Row(
                                 children: const [
-                                  Icon(Icons.agriculture, color: AppColors.primaryColor),
+                                  Icon(Icons.agriculture, color: AppColors.primary),
                                   SizedBox(width: 12),
                                   Text('Farmer'),
                                 ],
@@ -227,7 +227,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               value: UserRole.consumer,
                               child: Row(
                                 children: const [
-                                  Icon(Icons.shopping_cart, color: AppColors.primaryColor),
+                                  Icon(Icons.shopping_cart, color: AppColors.primary),
                                   SizedBox(width: 12),
                                   Text('Consumer'),
                                 ],
@@ -260,7 +260,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ElevatedButton(
                       onPressed: _isLoading ? null : _signup,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: AppColors.primary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -301,7 +301,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: const Text(
                             'Sign In',
                             style: TextStyle(
-                              color: AppColors.primaryColor,
+                              color: AppColors.primary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

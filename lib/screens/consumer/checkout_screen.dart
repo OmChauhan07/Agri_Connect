@@ -123,7 +123,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         title: const Text('Checkout'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -133,7 +133,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+                color: AppColors.primary,
               ),
             )
           : SingleChildScrollView(
@@ -258,7 +258,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ],
@@ -388,7 +388,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                             value: 'Cash on Delivery',
                             groupValue: _paymentMethod,
-                            activeColor: AppColors.primaryColor,
+                            activeColor: AppColors.primary,
                             onChanged: (value) {
                               setState(() {
                                 _paymentMethod = value!;
@@ -425,7 +425,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                             value: 'Credit Card',
                             groupValue: _paymentMethod,
-                            activeColor: AppColors.primaryColor,
+                            activeColor: AppColors.primary,
                             onChanged: null, // Disabled
                           ),
                         ],
@@ -439,7 +439,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _placeOrder,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
+                          backgroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -484,7 +484,7 @@ class OrderConfirmationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         title: const Text('Order Confirmation'),
         automaticallyImplyLeading: false,
       ),
@@ -529,7 +529,7 @@ class OrderConfirmationScreen extends StatelessWidget {
                     Navigator.pushReplacementNamed(context, '/orders');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
+                    backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -557,7 +557,7 @@ class OrderConfirmationScreen extends StatelessWidget {
                 child: const Text(
                   'Continue Shopping',
                   style: TextStyle(
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                     fontSize: 16,
                   ),
                 ),

@@ -111,7 +111,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     if (_isLoading) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: AppColors.primary,
           title: const Text('Product Details'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -120,7 +120,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         body: const Center(
           child: CircularProgressIndicator(
-            color: AppColors.primaryColor,
+            color: AppColors.primary,
           ),
         ),
       );
@@ -129,7 +129,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     if (_product == null) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: AppColors.primary,
           title: const Text('Product Details'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -157,7 +157,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ElevatedButton(
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryColor,
+                  backgroundColor: AppColors.primary,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,
@@ -182,7 +182,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             slivers: [
               // App Bar
               SliverAppBar(
-                backgroundColor: AppColors.primaryColor,
+                backgroundColor: AppColors.primary,
                 expandedHeight: 300,
                 floating: false,
                 pinned: true,
@@ -258,7 +258,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: _currentImageIndex == entry.key
-                                            ? AppColors.primaryColor
+                                            ? AppColors.primary
                                             : Colors.white.withOpacity(0.5),
                                       ),
                                     );
@@ -338,7 +338,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
+                              color: AppColors.primary,
                             ),
                           ),
                         ],
@@ -580,7 +580,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         IconButton(
                           icon: const Icon(Icons.remove),
                           onPressed: _quantity > 1 ? _decrementQuantity : null,
-                          color: _quantity > 1 ? AppColors.primaryColor : Colors.grey,
+                          color: _quantity > 1 ? AppColors.primary : Colors.grey,
                         ),
                         // Quantity
                         Text(
@@ -594,7 +594,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         IconButton(
                           icon: const Icon(Icons.add),
                           onPressed: _product.stockQuantity > _quantity ? _incrementQuantity : null,
-                          color: _product.stockQuantity > _quantity ? AppColors.primaryColor : Colors.grey,
+                          color: _product.stockQuantity > _quantity ? AppColors.primary : Colors.grey,
                         ),
                       ],
                     ),
@@ -607,7 +607,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ? _proceedToCheckout
                           : null,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: AppColors.primary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),

@@ -198,7 +198,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         title: Text(
           widget.product == null ? 'Add New Product' : 'Edit Product',
           style: const TextStyle(color: Colors.white),
@@ -223,7 +223,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+                color: AppColors.primary,
               ),
             )
           : SingleChildScrollView(
@@ -521,7 +521,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),
                       value: _isAvailable,
-                      activeColor: AppColors.primaryColor,
+                      activeColor: AppColors.primary,
                       contentPadding: EdgeInsets.zero,
                       onChanged: (bool value) {
                         setState(() {
@@ -571,7 +571,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       const Icon(
                                         Icons.calendar_today,
                                         size: 18,
-                                        color: AppColors.primaryColor,
+                                        color: AppColors.primary,
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
@@ -616,7 +616,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       const Icon(
                                         Icons.calendar_today,
                                         size: 18,
-                                        color: AppColors.primaryColor,
+                                        color: AppColors.primary,
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
@@ -647,7 +647,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         style: TextStyle(color: Colors.grey[600], fontSize: 12),
                       ),
                       value: _isOrganic,
-                      activeColor: AppColors.primaryColor,
+                      activeColor: AppColors.primary,
                       contentPadding: EdgeInsets.zero,
                       onChanged: (bool value) {
                         setState(() {
@@ -663,7 +663,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _saveProduct,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
+                          backgroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),

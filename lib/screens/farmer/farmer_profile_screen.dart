@@ -135,7 +135,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+                color: AppColors.primary,
               ),
             )
           : SingleChildScrollView(
@@ -192,7 +192,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
+                                    color: AppColors.primary,
                                     shape: BoxShape.circle,
                                     border: Border.all(color: Colors.white, width: 2),
                                   ),
@@ -277,7 +277,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                                     }
                                   },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: _isEditing ? AppColors.primaryColor : Colors.grey[200],
+                              backgroundColor: _isEditing ? AppColors.primary : Colors.grey[200],
                               foregroundColor: _isEditing ? Colors.white : Colors.black,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(
@@ -437,7 +437,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                         
                         // Settings List
                         ListTile(
-                          leading: const Icon(Icons.lock, color: AppColors.primaryColor),
+                          leading: const Icon(Icons.lock, color: AppColors.primary),
                           title: const Text('Change Password'),
                           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                           contentPadding: EdgeInsets.zero,
@@ -450,7 +450,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                         ),
                         const Divider(),
                         ListTile(
-                          leading: const Icon(Icons.language, color: AppColors.primaryColor),
+                          leading: const Icon(Icons.language, color: AppColors.primary),
                           title: const Text('Language'),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -470,7 +470,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                         ),
                         const Divider(),
                         ListTile(
-                          leading: const Icon(Icons.notifications, color: AppColors.primaryColor),
+                          leading: const Icon(Icons.notifications, color: AppColors.primary),
                           title: const Text('Notification Settings'),
                           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                           contentPadding: EdgeInsets.zero,
@@ -483,7 +483,7 @@ class _FarmerProfileScreenState extends State<FarmerProfileScreen> {
                         ),
                         const Divider(),
                         ListTile(
-                          leading: const Icon(Icons.help, color: AppColors.primaryColor),
+                          leading: const Icon(Icons.help, color: AppColors.primary),
                           title: const Text('Help & Support'),
                           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                           contentPadding: EdgeInsets.zero,
