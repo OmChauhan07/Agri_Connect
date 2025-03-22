@@ -13,11 +13,20 @@ import 'utils/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Supabase with credentials
-  await SupabaseInit.initialize();
+  // Add a delay for Flutter web to fully initialize
+  await Future.delayed(const Duration(milliseconds: 500));
   
-  // Setup the database if needed
-  await SupabaseInit.setupDatabase();
+  try {
+    // Initialize Supabase with credentials
+    await SupabaseInit.initialize();
+    
+    // Setup the database if needed
+    await SupabaseInit.setupDatabase();
+    
+    print('Supabase initialization completed successfully');
+  } catch (e) {
+    print('Error during initialization: $e');
+  }
   
   runApp(const MyApp());
 }

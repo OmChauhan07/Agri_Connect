@@ -89,17 +89,82 @@ class _DonationScreenState extends State<DonationScreen> with SingleTickerProvid
     Navigator.pop(context);
     
     if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Donation successful! Thank you for your contribution.')),
-      );
+      // Get the latest donation (which should be at index 0)
+      final latestDonation = ngoProvider.userDonations.isNotEmpty ? ngoProvider.userDonations[0] : null;
       
+      // Reset form
       setState(() {
         _selectedNGO = null;
         _amountController.clear();
       });
       
-      // Switch to donation history tab
-      _tabController.animateTo(1);
+      // Show success dialog with certificate
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Donation Successful!'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.check_circle, color: Colors.green, size: 64),
+                const SizedBox(height: 16),
+                const Text(
+                  'Thank you for your contribution!',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'You have donated ₹${latestDonation?.amount.toStringAsFixed(2)} to ${latestDonation?.ngoName}',
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.green.shade200),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.green.shade50,
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Donation Certificate',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      if (latestDonation?.certificateId != null)
+                        Text(
+                          'Certificate ID: ${latestDonation!.certificateId}',
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Date: ${latestDonation?.donationDate.toString().substring(0, 10)}',
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Switch to donation history tab
+                _tabController.animateTo(1);
+              },
+              child: const Text('View Donation History'),
+            ),
+          ],
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(ngoProvider.error ?? 'Failed to process donation. Please try again.')),

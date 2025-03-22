@@ -5,7 +5,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
-import 'scan_qr_screen.dart';
+import 'donation_screen.dart';
 import 'consumer_orders_screen.dart';
 import 'consumer_profile_screen.dart';
 
@@ -22,7 +22,7 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
 
   final List<Widget> _screens = [
     const MarketplaceScreen(),
-    const ScanQRScreen(),
+    const DonationScreen(),
     const ConsumerOrdersScreen(),
     const ConsumerProfileScreen(),
   ];
@@ -110,8 +110,8 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
               label: 'Market',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code_scanner),
-              label: 'Scan',
+              icon: Icon(Icons.volunteer_activism),
+              label: 'Donate',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_bag),
@@ -543,10 +543,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           children: [
                             _buildCategoryCard('Vegetables', Icons.eco),
                             _buildCategoryCard('Fruits', Icons.apple),
-                            _buildCategoryCard('Dairy', Icons.egg),
                             _buildCategoryCard('Grains', Icons.grass),
-                            _buildCategoryCard('Meat', Icons.restaurant),
-                            _buildCategoryCard('Others', Icons.more_horiz),
                           ],
                         ),
                       ],

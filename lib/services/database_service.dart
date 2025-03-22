@@ -432,15 +432,49 @@ class DatabaseService {
   // Create a donation
   Future<Donation> createDonation(Donation donation) async {
     try {
+      // Generate a certificate ID
+      final certificateId = generateCertificateId();
+      
+      // Create a map from the donation and add certificate ID
+      final donationMap = donation.toJson();
+      donationMap['certificate_id'] = certificateId;
+      
       final data = await _supabase
           .from('donations')
-          .insert(donation.toJson())
+          .insert(donationMap)
           .select()
           .single();
       
       return Donation.fromJson(data);
     } catch (e) {
       throw Exception('Failed to create donation: ${e.toString()}');
+    }
+  }
+  
+  // Generate a unique certificate ID for donations
+  String generateCertificateId() {
+    final now = DateTime.now();
+    final dateStr = '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
+    final randomStr = (now.millisecondsSinceEpoch % 10000).toString().padLeft(4, '0');
+    return 'DON-$dateStr-$randomStr';
+  }
+  
+  // Get donation by ID
+  Future<Donation?> getDonationById(String donationId) async {
+    try {
+      final data = await _supabase
+          .from('donations')
+          .select('*, ngos(name, logo_url)')
+          .eq('id', donationId)
+          .single();
+      
+      return Donation.fromJson({
+        ...data,
+        'ngo_name': data['ngos']['name'],
+        'ngo_logo': data['ngos']['logo_url'],
+      });
+    } catch (e) {
+      return null;
     }
   }
   

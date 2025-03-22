@@ -96,10 +96,46 @@ class NGOProvider with ChangeNotifier {
     }
   }
   
-  // Get donation certificate (for future implementation)
-  Future<String?> getDonationCertificate(String donationId) async {
-    // This would be implemented to generate or fetch a certificate for a donation
-    // For now, just return a placeholder
-    return null;
+  // Get donation certificate
+  Future<Donation?> getDonationById(String donationId) async {
+    try {
+      // Check if the donation is already in the local list
+      final localDonation = _userDonations.firstWhere(
+        (donation) => donation.id == donationId,
+        orElse: () => Donation(
+          id: '', 
+          consumerId: '', 
+          ngoId: '', 
+          amount: 0, 
+          donationDate: DateTime.now()
+        ),
+      );
+      
+      if (localDonation.id.isNotEmpty) {
+        return localDonation;
+      }
+      
+      // If not found locally, fetch from the database
+      try {
+        final donation = await _databaseService.getDonationById(donationId);
+        if (donation != null) {
+          // Add to local list if not already there
+          if (!_userDonations.any((d) => d.id == donation.id)) {
+            _userDonations.add(donation);
+            notifyListeners();
+          }
+          return donation;
+        }
+      } catch (e) {
+        _error = 'Failed to fetch donation: ${e.toString()}';
+        notifyListeners();
+      }
+      
+      return null;
+    } catch (e) {
+      _error = 'Failed to get donation: ${e.toString()}';
+      notifyListeners();
+      return null;
+    }
   }
 }
