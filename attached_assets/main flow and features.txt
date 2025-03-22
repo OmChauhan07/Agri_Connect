@@ -1,0 +1,14 @@
+main flow and features
+
+in app there is login, sing up, forget feature and in only sing up page provide dropdown list (consumer and farmer) this two, they sing up from there and login with those id and they direct redirect to according home page. 
+farmer side : profile feature in that address of farm, contact number, email id, . Home page : in this farmer dashboard, in dashboard total order of farmer in past, pending order, delivered order and his top rated product. another Screen listing a product in this farmer can list product with some images so consumer can see, name of product, description of product, best before date(exp date), harvest date of product in from of date input type, stock in and sold out option and after listing farmer can edit all this information, now in another screen farmer can view order of he product, farmer can accept and reject order option another 
+ 
+
+
+
+now in consumer interface in home page: there is a landscape section of featured farmer in this section there is a top rated farmer according to consumer reviews , in second landscape section top rated products according to consumer given reviews and in top side search feature of consumer can search. from those section consumer can order product and view average of this product rating and as well as farmer average ratting , another screen provide order feature in this consumer can see this all past and present order and give them rating to the farmer and product both after receiving order like flipkart have this feature , another screen profile feature , in this consumer can add name, contact number, e-mail id, address of delivery , can change language and the language is English, Gujarati, Hindi this three. another screen cart , in this show all product that consumer add to cart. another screen donate option in this consumer can donate in this show list of NGO's and detail of it and provide there two buttons, in one donate option from this consumer can donate money for feedings poor people after donating money consumer gate certificate of donation with amount and his name and in another more details, when consumer click in more details then redirect to NGO website
+
+admine side feature : if any farmer have average of 4 star or above 4 star rating then give him badge of leaf in color orange , this badge show in farmer profile and after product detail so consumer can verify top rated farmer and if any farmer have 4.6 and above average then give him green color leaf badge like Instagram have verified badge
+
+
+first understand all my requirements than process 
