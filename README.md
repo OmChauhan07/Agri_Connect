@@ -68,6 +68,7 @@ Odoo x Gujarat Vidhyapith
 Hackathon '25
 
 Team 25 
+Team Name: FarmFusion
 
 video link: https://drive.google.com/drive/folders/19nWJHweTjhogcyqt6xxbqKAUEKoUxeN5
 
