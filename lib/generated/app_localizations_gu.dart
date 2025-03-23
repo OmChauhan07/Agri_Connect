@@ -141,6 +141,27 @@ class AppLocalizationsGu extends AppLocalizations {
   String get productsBuyNow => 'હમણાં ખરીદો';
 
   @override
+  String get productsAvailable => 'ઉપલબ્ધ ઉત્પાદનો';
+
+  @override
+  String get productsSearch => 'ઉત્પાદનો શોધો...';
+
+  @override
+  String get productsNoFound => 'કોઈ ઉત્પાદન મળ્યું નથી';
+
+  @override
+  String get productsFilter => 'ઉત્પાદનો ફિલ્ટર કરો';
+
+  @override
+  String get productsCategory => 'શ્રેણી';
+
+  @override
+  String get productsGridView => 'ગ્રિડ વ્યૂ';
+
+  @override
+  String get productsListView => 'સૂચિ દૃશ્ય';
+
+  @override
   String get ordersTitle => 'ઓર્ડર';
 
   @override
@@ -214,6 +235,9 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get farmerHistory => 'ખેતીનો ઇતિહાસ';
+
+  @override
+  String get farmerTopRated => 'શ્રેષ્ઠ રેટેડ ખેડૂતો';
 
   @override
   String get cartTitle => 'કાર્ટ';
@@ -337,4 +361,31 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get productInfo => 'Product Information';
+
+  @override
+  String get categoriesAll => 'બધા';
+
+  @override
+  String get categoriesVegetables => 'શાકભાજી';
+
+  @override
+  String get categoriesFruits => 'ફળો';
+
+  @override
+  String get categoriesGrains => 'અનાજ';
+
+  @override
+  String get categoriesDairy => 'ડેરી';
+
+  @override
+  String get categoriesMeat => 'માંસ';
+
+  @override
+  String get categoriesHerbs => 'જડીબુટ્ટી';
+
+  @override
+  String get categoriesOrganic => 'જૈવિક';
+
+  @override
+  String get categoriesAvailable => 'ઉપલબ્ધ';
 }

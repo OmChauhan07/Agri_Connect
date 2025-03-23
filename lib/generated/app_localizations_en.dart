@@ -141,6 +141,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get productsBuyNow => 'Buy Now';
 
   @override
+  String get productsAvailable => 'Available Products';
+
+  @override
+  String get productsSearch => 'Search products...';
+
+  @override
+  String get productsNoFound => 'No products found';
+
+  @override
+  String get productsFilter => 'Filter Products';
+
+  @override
+  String get productsCategory => 'Category';
+
+  @override
+  String get productsGridView => 'Grid View';
+
+  @override
+  String get productsListView => 'List View';
+
+  @override
   String get ordersTitle => 'Orders';
 
   @override
@@ -214,6 +235,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get farmerHistory => 'Farming History';
+
+  @override
+  String get farmerTopRated => 'Top Rated Farmers';
 
   @override
   String get cartTitle => 'Cart';
@@ -337,4 +361,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get productInfo => 'Product Information';
+
+  @override
+  String get categoriesAll => 'All';
+
+  @override
+  String get categoriesVegetables => 'Vegetables';
+
+  @override
+  String get categoriesFruits => 'Fruits';
+
+  @override
+  String get categoriesGrains => 'Grains';
+
+  @override
+  String get categoriesDairy => 'Dairy';
+
+  @override
+  String get categoriesMeat => 'Meat';
+
+  @override
+  String get categoriesHerbs => 'Herbs';
+
+  @override
+  String get categoriesOrganic => 'Organic';
+
+  @override
+  String get categoriesAvailable => 'Available';
 }

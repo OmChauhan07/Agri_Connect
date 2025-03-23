@@ -48,6 +48,13 @@
   "productsOutOfStock": "સ્ટોકમાં નથી",
   "productsAddToCart": "કાર્ટમાં ઉમેરો",
   "productsBuyNow": "હમણાં ખરીદો",
+  "productsAvailable": "ઉપલબ્ધ ઉત્પાદનો",
+  "productsSearch": "ઉત્પાદનો શોધો...",
+  "productsNoFound": "કોઈ ઉત્પાદન મળ્યું નથી",
+  "productsFilter": "ઉત્પાદનો ફિલ્ટર કરો",
+  "productsCategory": "શ્રેણી",
+  "productsGridView": "ગ્રિડ વ્યૂ",
+  "productsListView": "સૂચિ દૃશ્ય",
   
   "ordersTitle": "ઓર્ડર",
   "ordersMyOrders": "મારા ઓર્ડર",
@@ -75,6 +82,7 @@
   "farmerPractices": "ખેતી પદ્ધતિઓ",
   "farmerCertifications": "જૈવિક પ્રમાણપત્રો",
   "farmerHistory": "ખેતીનો ઇતિહાસ",
+  "farmerTopRated": "શ્રેષ્ઠ રેટેડ ખેડૂતો",
   
   "cartTitle": "કાર્ટ",
   "cartCheckout": "ચેકઆઉટ",
@@ -112,5 +120,15 @@
   
   "languageSettings": "ભાષા સેટિંગ્સ",
   "languageSelect": "તમારી પસંદગીની ભાષા પસંદ કરો",
-  "languageNote": "એપ્લિકેશન બધા ટેક્સ્ટ કન્ટેન્ટ માટે પસંદ કરેલી ભાષાનો ઉપયોગ કરશે."
+  "languageNote": "એપ્લિકેશન બધા ટેક્સ્ટ કન્ટેન્ટ માટે પસંદ કરેલી ભાષાનો ઉપયોગ કરશે.",
+  
+  "categoriesAll": "બધા",
+  "categoriesVegetables": "શાકભાજી",
+  "categoriesFruits": "ફળો",
+  "categoriesGrains": "અનાજ",
+  "categoriesDairy": "ડેરી",
+  "categoriesMeat": "માંસ",
+  "categoriesHerbs": "જડીબુટ્ટી",
+  "categoriesOrganic": "જૈવિક",
+  "categoriesAvailable": "ઉપલબ્ધ"
 } 

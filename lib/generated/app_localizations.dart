@@ -361,6 +361,48 @@ abstract class AppLocalizations {
   /// **'Buy Now'**
   String get productsBuyNow;
 
+  /// No description provided for @productsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Products'**
+  String get productsAvailable;
+
+  /// No description provided for @productsSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products...'**
+  String get productsSearch;
+
+  /// No description provided for @productsNoFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found'**
+  String get productsNoFound;
+
+  /// No description provided for @productsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Products'**
+  String get productsFilter;
+
+  /// No description provided for @productsCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get productsCategory;
+
+  /// No description provided for @productsGridView.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid View'**
+  String get productsGridView;
+
+  /// No description provided for @productsListView.
+  ///
+  /// In en, this message translates to:
+  /// **'List View'**
+  String get productsListView;
+
   /// No description provided for @ordersTitle.
   ///
   /// In en, this message translates to:
@@ -510,6 +552,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Farming History'**
   String get farmerHistory;
+
+  /// No description provided for @farmerTopRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated Farmers'**
+  String get farmerTopRated;
 
   /// No description provided for @cartTitle.
   ///
@@ -756,6 +804,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Product Information'**
   String get productInfo;
+
+  /// No description provided for @categoriesAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get categoriesAll;
+
+  /// No description provided for @categoriesVegetables.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegetables'**
+  String get categoriesVegetables;
+
+  /// No description provided for @categoriesFruits.
+  ///
+  /// In en, this message translates to:
+  /// **'Fruits'**
+  String get categoriesFruits;
+
+  /// No description provided for @categoriesGrains.
+  ///
+  /// In en, this message translates to:
+  /// **'Grains'**
+  String get categoriesGrains;
+
+  /// No description provided for @categoriesDairy.
+  ///
+  /// In en, this message translates to:
+  /// **'Dairy'**
+  String get categoriesDairy;
+
+  /// No description provided for @categoriesMeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Meat'**
+  String get categoriesMeat;
+
+  /// No description provided for @categoriesHerbs.
+  ///
+  /// In en, this message translates to:
+  /// **'Herbs'**
+  String get categoriesHerbs;
+
+  /// No description provided for @categoriesOrganic.
+  ///
+  /// In en, this message translates to:
+  /// **'Organic'**
+  String get categoriesOrganic;
+
+  /// No description provided for @categoriesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get categoriesAvailable;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

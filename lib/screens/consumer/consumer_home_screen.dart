@@ -81,20 +81,6 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
           elevation: 0,
           automaticallyImplyLeading: false, // Remove the back button
           title: Text(_getScreenTitle()),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                // Show search dialog or navigate to search screen
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              onPressed: () {
-                // Navigate to cart screen
-              },
-            ),
-          ],
         ),
         body: PageView(
           controller: _pageController,
@@ -250,12 +236,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                         contentPadding: EdgeInsets.zero,
                       ),
                       onSubmitted: (value) {
-                        // Navigate to search results
-                        Navigator.pushNamed(
-                          context,
-                          '/search-results',
-                          arguments: value,
-                        );
+                        if (value.isNotEmpty) {
+                          // Navigate to all products with search query
+                          Navigator.pushNamed(
+                            context,
+                            '/products',
+                            arguments: {'searchQuery': value},
+                          );
+                        }
                       },
                     ),
                   ),
@@ -270,7 +258,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              loc.farmerProducts,
+                              'Top Rated Farmers',
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -282,7 +270,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 Navigator.pushNamed(context, '/farmers');
                               },
                               child: Text(
-                                loc.productsAll,
+                                'More',
                                 style: const TextStyle(
                                   color: AppColors.primary,
                                 ),
@@ -304,8 +292,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                 )
                               : ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount:
-                                      productProvider.featuredFarmers.length,
+                                  itemCount: productProvider
+                                              .featuredFarmers.length >
+                                          5
+                                      ? 5 // Show only top 5 farmers
+                                      : productProvider.featuredFarmers.length,
                                   itemBuilder: (context, index) {
                                     final farmer =
                                         productProvider.featuredFarmers[index];
@@ -611,6 +602,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                             _buildCategoryCard('Vegetables', Icons.eco),
                             _buildCategoryCard('Fruits', Icons.apple),
                             _buildCategoryCard('Grains', Icons.grass),
+                            _buildCategoryCard('Dairy', Icons.breakfast_dining),
+                            _buildCategoryCard('Herbs', Icons.spa),
                           ],
                         ),
                       ],
@@ -782,7 +775,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                         color: AppColors.primary),
                                   ),
                                 ),
-                                child: const Text('View All Products'),
+                                child: Text(loc.productsAll),
                               ),
                             ),
                           ),
@@ -798,11 +791,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   Widget _buildCategoryCard(String title, IconData icon) {
     return GestureDetector(
       onTap: () {
-        // Navigate to category products
+        // Navigate to all products screen with category filter
         Navigator.pushNamed(
           context,
-          '/category-products',
-          arguments: title,
+          '/products',
+          arguments: {'category': title},
         );
       },
       child: Container(

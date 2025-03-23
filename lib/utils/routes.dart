@@ -8,6 +8,9 @@ import '../screens/consumer/consumer_home_screen.dart';
 import '../screens/farmer/add_product_screen.dart';
 import '../screens/farmer/farmer_dashboard_screen.dart';
 import '../screens/settings/language_screen.dart';
+import '../screens/consumer/all_products_screen.dart';
+import '../screens/consumer/farmer_detail_screen.dart';
+import '../screens/consumer/all_farmers_screen.dart';
 
 class Routes {
   // Route names
@@ -19,9 +22,14 @@ class Routes {
   static const String orderConfirmation = '/order-confirmation';
   static const String myOrders = '/my-orders';
   static const String languageSettings = '/language-settings';
+  static const String products = '/products';
+  static const String farmerDetail = '/farmer-detail';
+  static const String allFarmers = '/farmers';
 
   // Route generator
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
+
     switch (settings.name) {
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
@@ -30,9 +38,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const ConsumerHomeScreen());
 
       case productDetail:
-        final productId = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => ProductDetailScreen(productId: productId),
+          builder: (_) => ProductDetailScreen(productId: args as String),
         );
 
       case addProduct:
@@ -46,9 +53,8 @@ class Routes {
         );
 
       case orderConfirmation:
-        final orderId = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => OrderConfirmationScreen(orderId: orderId),
+          builder: (_) => OrderConfirmationScreen(orderId: args as String),
         );
 
       case myOrders:
@@ -59,6 +65,23 @@ class Routes {
       case languageSettings:
         return MaterialPageRoute(
           builder: (_) => const LanguageScreen(),
+        );
+
+      case products:
+        return MaterialPageRoute(
+          builder: (_) => const AllProductsScreen(),
+          settings: settings,
+        );
+
+      case farmerDetail:
+        final farmerId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => FarmerDetailScreen(farmerId: farmerId),
+        );
+
+      case allFarmers:
+        return MaterialPageRoute(
+          builder: (_) => const AllFarmersScreen(),
         );
 
       // Add other routes as needed

@@ -48,6 +48,13 @@
   "productsOutOfStock": "Out of Stock",
   "productsAddToCart": "Add to Cart",
   "productsBuyNow": "Buy Now",
+  "productsAvailable": "Available Products",
+  "productsSearch": "Search products...",
+  "productsNoFound": "No products found",
+  "productsFilter": "Filter Products",
+  "productsCategory": "Category",
+  "productsGridView": "Grid View",
+  "productsListView": "List View",
   
   "ordersTitle": "Orders",
   "ordersMyOrders": "My Orders",
@@ -75,6 +82,7 @@
   "farmerPractices": "Farming Practices",
   "farmerCertifications": "Organic Certifications",
   "farmerHistory": "Farming History",
+  "farmerTopRated": "Top Rated Farmers",
   
   "cartTitle": "Cart",
   "cartCheckout": "Checkout",
@@ -122,5 +130,15 @@
   "buttonsAndActions": "Buttons and Actions",
   "formFields": "Form Fields",
   "errorMessages": "Error Messages",
-  "productInfo": "Product Information"
+  "productInfo": "Product Information",
+  
+  "categoriesAll": "All",
+  "categoriesVegetables": "Vegetables",
+  "categoriesFruits": "Fruits",
+  "categoriesGrains": "Grains",
+  "categoriesDairy": "Dairy",
+  "categoriesMeat": "Meat",
+  "categoriesHerbs": "Herbs",
+  "categoriesOrganic": "Organic",
+  "categoriesAvailable": "Available"
 } 

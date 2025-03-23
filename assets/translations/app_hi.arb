@@ -48,6 +48,13 @@
   "productsOutOfStock": "स्टॉक में नहीं है",
   "productsAddToCart": "कार्ट में जोड़ें",
   "productsBuyNow": "अभी खरीदें",
+  "productsAvailable": "उपलब्ध उत्पाद",
+  "productsSearch": "उत्पाद खोजें...",
+  "productsNoFound": "कोई उत्पाद नहीं मिला",
+  "productsFilter": "उत्पाद फ़िल्टर करें",
+  "productsCategory": "श्रेणी",
+  "productsGridView": "ग्रिड व्यू",
+  "productsListView": "सूची दृश्य",
   
   "ordersTitle": "ऑर्डर",
   "ordersMyOrders": "मेरे ऑर्डर",
@@ -75,6 +82,7 @@
   "farmerPractices": "खेती पद्धतियाँ",
   "farmerCertifications": "जैविक प्रमाणन",
   "farmerHistory": "खेती का इतिहास",
+  "farmerTopRated": "सर्वोच्च रेटेड किसान",
   
   "cartTitle": "कार्ट",
   "cartCheckout": "चेकआउट",
@@ -112,5 +120,15 @@
   
   "languageSettings": "भाषा सेटिंग्स",
   "languageSelect": "अपनी पसंदीदा भाषा चुनें",
-  "languageNote": "ऐप सभी टेक्स्ट सामग्री के लिए चयनित भाषा का उपयोग करेगा।"
+  "languageNote": "ऐप सभी टेक्स्ट सामग्री के लिए चयनित भाषा का उपयोग करेगा।",
+  
+  "categoriesAll": "सभी",
+  "categoriesVegetables": "सब्जियां",
+  "categoriesFruits": "फल",
+  "categoriesGrains": "अनाज",
+  "categoriesDairy": "डेयरी",
+  "categoriesMeat": "मांस",
+  "categoriesHerbs": "जड़ी बूटी",
+  "categoriesOrganic": "जैविक",
+  "categoriesAvailable": "उपलब्ध"
 } 

@@ -141,6 +141,27 @@ class AppLocalizationsHi extends AppLocalizations {
   String get productsBuyNow => 'अभी खरीदें';
 
   @override
+  String get productsAvailable => 'उपलब्ध उत्पाद';
+
+  @override
+  String get productsSearch => 'उत्पाद खोजें...';
+
+  @override
+  String get productsNoFound => 'कोई उत्पाद नहीं मिला';
+
+  @override
+  String get productsFilter => 'उत्पाद फ़िल्टर करें';
+
+  @override
+  String get productsCategory => 'श्रेणी';
+
+  @override
+  String get productsGridView => 'ग्रिड व्यू';
+
+  @override
+  String get productsListView => 'सूची दृश्य';
+
+  @override
   String get ordersTitle => 'ऑर्डर';
 
   @override
@@ -214,6 +235,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get farmerHistory => 'खेती का इतिहास';
+
+  @override
+  String get farmerTopRated => 'सर्वोच्च रेटेड किसान';
 
   @override
   String get cartTitle => 'कार्ट';
@@ -337,4 +361,31 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get productInfo => 'Product Information';
+
+  @override
+  String get categoriesAll => 'सभी';
+
+  @override
+  String get categoriesVegetables => 'सब्जियां';
+
+  @override
+  String get categoriesFruits => 'फल';
+
+  @override
+  String get categoriesGrains => 'अनाज';
+
+  @override
+  String get categoriesDairy => 'डेयरी';
+
+  @override
+  String get categoriesMeat => 'मांस';
+
+  @override
+  String get categoriesHerbs => 'जड़ी बूटी';
+
+  @override
+  String get categoriesOrganic => 'जैविक';
+
+  @override
+  String get categoriesAvailable => 'उपलब्ध';
 }
