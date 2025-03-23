@@ -63,3 +63,16 @@ This project follows a provider-based state management approach with a service-o
 ## Troubleshooting
 
 If you encounter a `PostgrestException` with a 401 code, it indicates an invalid Supabase API key. Check your `.env` file to ensure you've entered the correct credentials from the Supabase dashboard.
+
+Odoo x Gujarat Vidhyapith 
+Hackathon '25
+
+Team 25 
+
+video link: https://drive.google.com/drive/folders/19nWJHweTjhogcyqt6xxbqKAUEKoUxeN5
+
+Team Members: 
+Ansh Patel
+Raj Patel
+Trushar Patel
+Om Chauhan
