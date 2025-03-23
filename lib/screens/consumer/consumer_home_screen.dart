@@ -47,74 +47,120 @@ class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
     final user = Provider.of<AuthProvider>(context).currentUser;
     final loc = LocalizationHelper.of(context);
 
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-        title: Text(loc.navigationHome),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // Show search dialog or navigate to search screen
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              // Navigate to cart screen
-            },
-          ),
-        ],
-      ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        children: _screens,
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 10,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_currentIndex != 0) {
+          // If not on the first tab, go to the first tab
+          _onTabTapped(0);
+          return false; // Don't close the app
+        }
+        // Show exit app confirmation dialog
+        return await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(loc.commonWarning),
+                content: Text('Are you sure you want to exit the app?'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: Text(loc.commonCancel),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: Text('Exit'),
+                  ),
+                ],
+              ),
+            ) ??
+            false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          backgroundColor: AppColors.primary,
+          elevation: 0,
+          automaticallyImplyLeading: false, // Remove the back button
+          title: Text(_getScreenTitle()),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                // Show search dialog or navigate to search screen
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {
+                // Navigate to cart screen
+              },
             ),
           ],
         ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: _onTabTapped,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Colors.grey,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
-              label: loc.navigationHome,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.volunteer_activism),
-              label: loc.navigationDonate,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.shopping_bag),
-              label: loc.navigationOrders,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: loc.navigationProfile,
-            ),
-          ],
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          children: _screens,
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 1,
+                blurRadius: 10,
+              ),
+            ],
+          ),
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: _onTabTapped,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedItemColor: AppColors.primary,
+            unselectedItemColor: Colors.grey,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.home),
+                label: loc.navigationHome,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.volunteer_activism),
+                label: loc.navigationDonate,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.shopping_bag),
+                label: loc.navigationOrders,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.person),
+                label: loc.navigationProfile,
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  // Helper method to get the title based on the current tab
+  String _getScreenTitle() {
+    final loc = LocalizationHelper.of(context);
+    switch (_currentIndex) {
+      case 0:
+        return loc.navigationHome;
+      case 1:
+        return loc.navigationDonate;
+      case 2:
+        return loc.navigationOrders;
+      case 3:
+        return loc.navigationProfile;
+      default:
+        return loc.navigationHome;
+    }
   }
 }
 
@@ -494,12 +540,13 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                     const SizedBox(height: 4),
                                                     // Product Price
                                                     Text(
-                                                      '\$${product.price.toStringAsFixed(2)}',
+                                                      '₹${product.price.toStringAsFixed(2)}',
                                                       style: const TextStyle(
-                                                        color:
-                                                            AppColors.primary,
+                                                        fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.bold,
+                                                        color:
+                                                            AppColors.primary,
                                                       ),
                                                     ),
                                                     const SizedBox(height: 4),
@@ -677,10 +724,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                                 const SizedBox(height: 4),
                                                 // Product Price
                                                 Text(
-                                                  '\$${product.price.toStringAsFixed(2)}',
+                                                  '₹${product.price.toStringAsFixed(2)}',
                                                   style: const TextStyle(
-                                                    color: AppColors.primary,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.bold,
+                                                    color: AppColors.primary,
                                                   ),
                                                 ),
                                                 const SizedBox(height: 4),

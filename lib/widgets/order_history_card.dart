@@ -18,7 +18,7 @@ class OrderHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('MMM dd, yyyy - hh:mm a');
-    final currencyFormat = NumberFormat.currency(locale: 'en_US', symbol: '\$');
+    final currencyFormat = NumberFormat.currency(symbol: '₹', decimalDigits: 2);
 
     return Container(
       decoration: BoxDecoration(
@@ -145,9 +145,9 @@ class OrderHistoryCard extends StatelessWidget {
                             children: [
                               Text(
                                 '${currencyFormat.format(item.price)} × ${item.quantity}',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.grey[700],
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
                                 ),
                               ),
                               Text(

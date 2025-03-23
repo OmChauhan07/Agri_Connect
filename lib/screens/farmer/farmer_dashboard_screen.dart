@@ -88,7 +88,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).currentUser;
-    final currencyFormat = NumberFormat.currency(locale: 'en_US', symbol: '\$');
+    final currencyFormat = NumberFormat.currency(symbol: '₹', decimalDigits: 2);
 
     return RefreshIndicator(
       onRefresh: _loadDashboardData,

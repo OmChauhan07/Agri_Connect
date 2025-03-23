@@ -11,7 +11,7 @@ class ProductCard extends StatelessWidget {
   final bool isFarmerView;
   final bool isGridView;
   final VoidCallback? onTap;
-  
+
   const ProductCard({
     Key? key,
     required this.product,
@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
       return _buildListCard(context);
     }
   }
-  
+
   // Grid View Card
   Widget _buildGridCard(BuildContext context) {
     return GestureDetector(
@@ -53,7 +53,8 @@ class ProductCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(12)),
                   child: SizedBox(
                     height: 120,
                     width: double.infinity,
@@ -61,7 +62,8 @@ class ProductCard extends StatelessWidget {
                         ? Image.network(
                             product.imageUrls.first,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => Container(
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
                               color: Colors.grey[200],
                               child: const Icon(
                                 Icons.image_not_supported,
@@ -80,14 +82,15 @@ class ProductCard extends StatelessWidget {
                           ),
                   ),
                 ),
-                
+
                 // Status Banner (if farmer view)
                 if (isFarmerView)
                   Positioned(
                     top: 8,
                     right: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: product.isAvailable && product.stockQuantity > 0
                             ? AppColors.success
@@ -106,7 +109,7 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                
+
                 // Organic Badge
                 if (product.isOrganic)
                   Positioned(
@@ -127,7 +130,7 @@ class ProductCard extends StatelessWidget {
                   ),
               ],
             ),
-            
+
             // Product Details
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -145,18 +148,18 @@ class ProductCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
-                  
+
                   // Price
                   Text(
-                    '\$${product.price.toStringAsFixed(2)}',
+                    '₹${product.price.toStringAsFixed(2)}',
                     style: const TextStyle(
-                      color: AppColors.primary,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      color: AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  
+
                   // Rating
                   Row(
                     children: [
@@ -175,8 +178,8 @@ class ProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
-                  if (isFarmerView) 
+
+                  if (isFarmerView)
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Row(
@@ -207,11 +210,11 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
-  
+
   // List View Card
   Widget _buildListCard(BuildContext context) {
     final dateFormat = DateFormat('MMM dd, yyyy');
-    
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -231,7 +234,8 @@ class ProductCard extends StatelessWidget {
           children: [
             // Product Image
             ClipRRect(
-              borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
+              borderRadius:
+                  const BorderRadius.horizontal(left: Radius.circular(12)),
               child: SizedBox(
                 height: 120,
                 width: 120,
@@ -242,7 +246,8 @@ class ProductCard extends StatelessWidget {
                           ? Image.network(
                               product.imageUrls.first,
                               fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Container(
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
                                 color: Colors.grey[200],
                                 child: const Icon(
                                   Icons.image_not_supported,
@@ -260,7 +265,7 @@ class ProductCard extends StatelessWidget {
                               ),
                             ),
                     ),
-                    
+
                     // Organic Badge
                     if (product.isOrganic)
                       Positioned(
@@ -283,7 +288,7 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Product Details
             Expanded(
               child: Padding(
@@ -302,18 +307,18 @@ class ProductCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    
+
                     // Price
                     Text(
-                      '\$${product.price.toStringAsFixed(2)}',
+                      '₹${product.price.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        color: AppColors.primary,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        color: AppColors.primary,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    
+
                     // Rating
                     Row(
                       children: [
@@ -328,9 +333,9 @@ class ProductCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 8),
-                    
+
                     // Additional Info (different for farmer and consumer view)
                     if (isFarmerView)
                       Row(
@@ -357,12 +362,14 @@ class ProductCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          
+
                           // Status Badge
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: product.isAvailable && product.stockQuantity > 0
+                              color: product.isAvailable &&
+                                      product.stockQuantity > 0
                                   ? AppColors.success.withOpacity(0.2)
                                   : AppColors.error.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(4),
@@ -372,7 +379,8 @@ class ProductCard extends StatelessWidget {
                                   ? 'In Stock'
                                   : 'Out of Stock',
                               style: TextStyle(
-                                color: product.isAvailable && product.stockQuantity > 0
+                                color: product.isAvailable &&
+                                        product.stockQuantity > 0
                                     ? AppColors.success
                                     : AppColors.error,
                                 fontSize: 12,
@@ -404,11 +412,13 @@ class ProductCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          
+
                           // Stock Badge
-                          if (product.stockQuantity <= 5 && product.stockQuantity > 0)
+                          if (product.stockQuantity <= 5 &&
+                              product.stockQuantity > 0)
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
                                 color: AppColors.warning.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(4),

@@ -128,9 +128,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         title: const Text('Checkout'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            shape: BoxShape.circle,
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
       ),
       body: _isLoading
@@ -223,9 +230,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          '\$${product.price.toStringAsFixed(2)} x $quantity',
+                                          '₹${product.price.toStringAsFixed(2)} x $quantity',
                                           style: TextStyle(
-                                            color: Colors.grey[600],
+                                            color: Colors.grey[700],
                                             fontSize: 14,
                                           ),
                                         ),
@@ -235,9 +242,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                                   // Subtotal
                                   Text(
-                                    '\$${(product.price * quantity).toStringAsFixed(2)}',
+                                    '₹${(product.price * quantity).toStringAsFixed(2)}',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
+                                      fontSize: 16,
                                     ),
                                   ),
                                 ],
@@ -259,10 +267,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ),
                               ),
                               Text(
-                                '\$${widget.totalAmount.toStringAsFixed(2)}',
+                                '₹${widget.totalAmount.toStringAsFixed(2)}',
                                 style: const TextStyle(
-                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                   color: AppColors.primary,
                                 ),
                               ),

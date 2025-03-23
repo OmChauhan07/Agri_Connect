@@ -222,9 +222,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
           widget.product == null ? 'Add New Product' : 'Edit Product',
           style: const TextStyle(color: Colors.white),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            shape: BoxShape.circle,
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         actions: [
           TextButton(
@@ -493,7 +500,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
-                        labelText: 'Price (\$)',
+                        labelText: 'Price (₹)',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

@@ -116,10 +116,11 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                 ),
                               ),
                               Text(
-                                '\$${_order!.totalAmount.toStringAsFixed(2)}',
+                                '₹${_order!.totalAmount.toStringAsFixed(2)}',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.green,
                                 ),
                               ),
                             ],

@@ -194,8 +194,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 leading: Container(
                   margin: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(
-                        alpha: 230, red: 255, green: 255, blue: 255),
+                    color: Colors.white.withOpacity(0.9),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -352,7 +351,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           // Product Price
                           Text(
-                            '\$${_product!.price.toStringAsFixed(2)}',
+                            '₹${_product!.price.toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,

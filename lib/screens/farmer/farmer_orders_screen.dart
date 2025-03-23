@@ -334,10 +334,10 @@ class _FarmerOrdersScreenState extends State<FarmerOrdersScreen>
                       ),
                     ),
                     Text(
-                      '\$${order.totalAmount.toStringAsFixed(2)}',
+                      '₹${order.totalAmount.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
                         fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.primary,
                       ),
                     ),

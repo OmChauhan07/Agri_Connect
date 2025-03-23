@@ -200,7 +200,7 @@ class ProductCard extends StatelessWidget {
         children: [
           Image.network(product.imageUrl),
           Text(product.name),
-          Text('${loc.cartPrice}: \$${product.price.toStringAsFixed(2)}'),
+          Text('${loc.cartPrice}: ₹${product.price.toStringAsFixed(2)}'),
           ElevatedButton(
             onPressed: () {},
             child: Text(loc.productsAddToCart),

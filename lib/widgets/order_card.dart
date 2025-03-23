@@ -134,9 +134,9 @@ class OrderCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
-                              '\$${(order.items[0].price * order.items[0].quantity).toStringAsFixed(2)}',
+                              '₹${(order.items[0].price * order.items[0].quantity).toStringAsFixed(2)}',
                               style: const TextStyle(
-                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
@@ -179,9 +179,9 @@ class OrderCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                '\$${(order.items[1].price * order.items[1].quantity).toStringAsFixed(2)}',
+                                '₹${(order.items[1].price * order.items[1].quantity).toStringAsFixed(2)}',
                                 style: const TextStyle(
-                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -217,7 +217,7 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$${order.totalAmount.toStringAsFixed(2)}',
+                      '₹${order.totalAmount.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
