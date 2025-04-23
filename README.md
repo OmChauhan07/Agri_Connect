@@ -29,11 +29,7 @@ This project uses Flutter and Supabase as its backend.
      ```
      cp .env.example .env
      ```
-   - Open the `.env` file and add your Supabase credentials:
-     ```
-     SUPABASE_URL=your_supabase_project_url
-     SUPABASE_ANON_KEY=your_supabase_anon_key
-     ```
+  
    - You can find these values in your Supabase dashboard under Project Settings > API
 
 4. Run the application
